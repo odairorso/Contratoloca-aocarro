@@ -11,8 +11,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
     model: '',
     year: '',
     plate: '',
-    price: '',
-    renavam: ''
+    price: ''
   });
   const [editingCarData, setEditingCarData] = useState(null);
 
@@ -62,7 +61,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
       alert('Erro ao adicionar carro: ' + error.message);
     } else {
       alert('Carro adicionado com sucesso!');
-      setNewCar({ brand: '', model: '', year: '', plate: '', price: '', renavam: '' });
+      setNewCar({ brand: '', model: '', year: '', plate: '', price: '' });
       fetchCars();
     }
   };
@@ -144,15 +143,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                 required
               />
               <input
-                type="text"
-                name="renavam"
-                placeholder="RENAVAM"
-                value={editingCarData.renavam}
-                onChange={handleEditInputChange}
-                className="p-2 border rounded"
-                required
-              />
-              <input
                 type="number"
                 name="price"
                 placeholder="Preço da Diária"
@@ -221,15 +211,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                 required
               />
               <input
-                type="text"
-                name="renavam"
-                placeholder="RENAVAM"
-                value={newCar.renavam}
-                onChange={handleInputChange}
-                className="p-2 border rounded"
-                required
-              />
-              <input
                 type="number"
                 name="price"
                 placeholder="Preço da Diária"
@@ -271,7 +252,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Modelo</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ano</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Placa</th>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">RENAVAM</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Diária (R$)</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ações</th>
                 </tr>
@@ -283,7 +263,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                     <td className="py-4 px-4 whitespace-nowrap">{car.model}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.year}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.plate}</td>
-                    <td className="py-4 px-4 whitespace-nowrap">{car.renavam}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.price}</td>
                     <td className="py-4 px-4 whitespace-nowrap">
                       <button
