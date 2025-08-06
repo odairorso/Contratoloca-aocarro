@@ -86,7 +86,7 @@ const ContractGenerator = () => {
       const fim = new Date(serviceData.dataFim);
       const diffTime = Math.abs(fim - inicio);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-      const valorTotal = diffDays * parseFloat(serviceData.valorDiaria.replace(',', '.') || 0);
+      const valorTotal = diffDays * parseFloat(String(serviceData.valorDiaria).replace(',', '.') || '0');
       return { dias: diffDays, total: valorTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) };
     }
     return { dias: 0, total: '0,00' };

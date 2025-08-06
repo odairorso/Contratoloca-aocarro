@@ -11,7 +11,8 @@ const CarManagement = () => {
     model: '',
     year: '',
     plate: '',
-    price: ''
+    price: '',
+    color: ''
   });
 
   const fetchCars = async () => {
@@ -123,6 +124,26 @@ const CarManagement = () => {
               className="p-2 border rounded"
               required
             />
+            <input
+              type="text"
+              name="color"
+              placeholder="Cor"
+              value={newCar.color}
+              onChange={handleInputChange}
+              className="p-2 border rounded"
+              required
+            />
+          </div>
+            <input
+              type="text"
+              name="color"
+              placeholder="Cor"
+              value={newCar.color}
+              onChange={handleInputChange}
+              className="p-2 border rounded"
+              required
+            />
+          </div>
           </div>
           <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Adicionar Carro
@@ -156,6 +177,7 @@ const CarManagement = () => {
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ano</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Placa</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Diária (R$)</th>
+                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Cor</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ações</th>
                 </tr>
               </thead>
@@ -167,6 +189,7 @@ const CarManagement = () => {
                     <td className="py-4 px-4 whitespace-nowrap">{car.year}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.plate}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.price}</td>
+                    <td className="py-4 px-4 whitespace-nowrap">{car.color}</td>
                     <td className="py-4 px-4 whitespace-nowrap">
                       <button
                         onClick={() => handleDeleteCar(car.id)}
