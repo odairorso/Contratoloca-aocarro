@@ -7,6 +7,18 @@ import './App.css';
 
 function App() {
   const [page, setPage] = useState('generator');
+  const [editingClient, setEditingClient] = useState(null);
+  const [editingCar, setEditingCar] = useState(null);
+
+  const handleEditClient = (client) => {
+    setEditingClient(client);
+    setPage('generator'); // Ou para uma página de edição de cliente dedicada
+  };
+
+  const handleEditCar = (car) => {
+    setEditingCar(car);
+    setPage('cars'); // Ou para uma página de edição de carro dedicada
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -39,9 +51,9 @@ function App() {
         </div>
       </header>
       <main>
-        {page === 'generator' && <ContractGenerator />}
-        {page === 'clients' && <ClientList />}
-        {page === 'cars' && <CarManagement />}
+        {page === 'generator' && <ContractGenerator editingClient={editingClient} setEditingClient={setEditingClient} />}
+        {page === 'clients' && <ClientList onSelectClient={() => {}} onEditClient={handleEditClient} />}
+        {page === 'cars' && <CarManagement editingCar={editingCar} setEditingCar={setEditingCar} onEditCar={handleEditCar} />}
       </main>
     </div>
   );

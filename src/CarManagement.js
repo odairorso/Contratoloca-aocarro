@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { Car, Search } from 'lucide-react';
 
-const CarManagement = () => {
+const CarManagement = ({ onEditCar }) => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -134,6 +134,7 @@ const CarManagement = () => {
               required
             />
           </div>
+          </div>
           <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Adicionar Carro
           </button>
@@ -180,6 +181,12 @@ const CarManagement = () => {
                     <td className="py-4 px-4 whitespace-nowrap">{car.price}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.color}</td>
                     <td className="py-4 px-4 whitespace-nowrap">
+                      <button
+                        onClick={() => onEditCar(car)}
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
+                      >
+                        Editar
+                      </button>
                       <button
                         onClick={() => handleDeleteCar(car.id)}
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"

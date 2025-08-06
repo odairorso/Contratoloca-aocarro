@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { Users } from 'lucide-react';
 
-const ClientList = ({ onSelectClient }) => {
+const ClientList = ({ onSelectClient, onEditClient }) => {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -77,6 +77,12 @@ const ClientList = ({ onSelectClient }) => {
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
                       >
                         Selecionar
+                      </button>
+                      <button
+                        onClick={() => onEditClient(client)}
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
+                      >
+                        Editar
                       </button>
                       <button
                         onClick={() => handleDelete(client.id)}
