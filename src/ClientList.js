@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
-import { Users } from 'lucide-react';
+import { Users, Edit, Trash2, Phone, Mail, CreditCard, Search, UserCheck, Loader } from 'lucide-react';
 
 const ClientList = ({ onSelectClient, onEditClient }) => {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredClients, setFilteredClients] = useState([]);
 
   const fetchClients = async () => {
     setLoading(true);
@@ -31,6 +33,16 @@ const ClientList = ({ onSelectClient, onEditClient }) => {
     fetchClients();
   }, []);
 
+  useEffect(() => {
+    const filtered = clients.filter(client => 
+      client.client_data.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      client.client_data.cpf.includes(searchTerm) ||
+      client.client_data.telefone.includes(searchTerm) ||
+      client.client_data.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredClients(filtered);
+  }, [clients, searchTerm]);
+
   const handleDelete = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir este cliente? Esta ação não pode ser desfeita.')) {
       const { error } = await supabase.from('contracts').delete().eq('id', id);
@@ -44,57 +56,115 @@ const ClientList = ({ onSelectClient, onEditClient }) => {
   };
 
   return (
-    <div className="p-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <Users className="w-8 h-8 text-blue-600" />
-          <h2 className="text-2xl font-bold text-gray-800">Lista de Clientes</h2>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-100 p-6 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Lista de Clientes
+                </h2>
+                <p className="text-gray-500 text-sm mt-1">
+                  {filteredClients.length} cliente{filteredClients.length !== 1 ? 's' : ''} encontrado{filteredClients.length !== 1 ? 's' : ''}
+                </p>
+              </div>
+            </div>
+            
+            {/* Search Bar */}
+            <div className="relative w-full sm:w-80">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Buscar por nome, CPF, telefone ou email..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
+              />
+            </div>
+          </div>
         </div>
+
         {loading ? (
-          <p>Carregando clientes...</p>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-100 p-12">
+            <div className="flex flex-col items-center justify-center">
+              <Loader className="w-8 h-8 text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600 font-medium">Carregando clientes...</p>
+            </div>
+          </div>
+        ) : filteredClients.length === 0 ? (
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-100 p-12">
+            <div className="text-center">
+              <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-600 mb-2">
+                {searchTerm ? 'Nenhum cliente encontrado' : 'Nenhum cliente cadastrado'}
+              </h3>
+              <p className="text-gray-500">
+                {searchTerm ? 'Tente ajustar os termos de busca' : 'Comece criando um novo contrato'}
+              </p>
+            </div>
+          </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nome</th>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">CPF / CNPJ</th>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Telefone</th>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ações</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {clients.map((client) => (
-                  <tr key={client.id} className="hover:bg-gray-50">
-                    <td className="py-4 px-4 whitespace-nowrap">{client.client_data.nome}</td>
-                    <td className="py-4 px-4 whitespace-nowrap">{client.client_data.cpf}</td>
-                    <td className="py-4 px-4 whitespace-nowrap">{client.client_data.telefone}</td>
-                    <td className="py-4 px-4 whitespace-nowrap">{client.client_data.email}</td>
-                    <td className="py-4 px-4 whitespace-nowrap">
-                      <button
-                        onClick={() => onSelectClient(client.client_data)}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                      >
-                        Selecionar
-                      </button>
-                      <button
-                        onClick={() => onEditClient(client)}
-                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        onClick={() => handleDelete(client.id)}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Excluir
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {filteredClients.map((client) => (
+              <div key={client.id} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-100 p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
+                {/* Client Info */}
+                <div className="mb-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                        {client.client_data.nome}
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <CreditCard className="w-4 h-4 text-blue-500" />
+                          <span className="font-mono">{client.client_data.cpf}</span>
+                        </div>
+                        {client.client_data.telefone && (
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Phone className="w-4 h-4 text-green-500" />
+                            <span>{client.client_data.telefone}</span>
+                          </div>
+                        )}
+                        {client.client_data.email && (
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Mail className="w-4 h-4 text-purple-500" />
+                            <span className="truncate">{client.client_data.email}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <button
+                    onClick={() => onSelectClient(client.client_data)}
+                    className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  >
+                    <UserCheck className="w-4 h-4" />
+                    <span className="text-sm">Selecionar</span>
+                  </button>
+                  <button
+                    onClick={() => onEditClient(client)}
+                    className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(client.id)}
+                    className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
