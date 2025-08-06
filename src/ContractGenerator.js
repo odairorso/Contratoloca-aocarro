@@ -153,7 +153,7 @@ const ContractGenerator = () => {
         <p><strong>CLÁUSULA 1ª – DO OBJETO</strong></p>
         <p>Por meio deste contrato, que firmam entre si a LOCADORA e o LOCATÁRIO, regula-se a locação do veículo:<br/>
         ${serviceData.modelo} ano ${serviceData.anoFabricacao}<br/>
-        Com placa ${serviceData.placa}, e com o valor de mercado aproximado em R$ ${serviceData.valorMercado}</p>
+        Com placa ${serviceData.placa}, RENAVAM ${serviceData.renavam}, e com o valor de mercado aproximado em R$ 55.000,00</p>
         <p><strong>Parágrafo único.</strong> O presente contrato é acompanhado de um laudo de vistoria, que descreve o veículo e o seu estado de conservação no momento em que o mesmo foi entregue ao LOCATÁRIO.</p>
         <br/>
         <p><strong>CLÁUSULA 2ª – DO VALOR DO ALUGUEL</strong></p>
@@ -240,8 +240,6 @@ const ContractGenerator = () => {
         <br/>
         <p><strong>CLÁUSULA 17ª – DO FORO</strong></p>
         <p>Fica desde já eleito o foro da comarca de Naviraí para serem resolvidas eventuais pendências decorrentes deste contrato.</p>
-        <br/>
-        <p>Por estarem assim certos e ajustados, firmam os signatários este instrumento em 02 (duas) vias de igual teor e forma.</p>
         <br/><br/>
         <p style="text-align: center;">Naviraí, ${day} de ${month} de ${year}.</p>
         <br/><br/>
@@ -288,302 +286,310 @@ const ContractGenerator = () => {
 
           {/* Formulário e Preview */}
           {contractType && (
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Formulário */}
-              <div className="space-y-6">
-                {/* Cliente */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados do Cliente</h3>
-                  <div className="space-y-4">
-                    <select
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      onChange={(e) => {
-                        const selected = clients.find(c => c.client_data.cpf === e.target.value);
-                        if (selected) setClientData(selected.client_data);
-                      }}
-                      value={clientData.cpf || ''}
-                    >
-                      <option value="">{loadingClients ? 'Carregando clientes...' : 'Selecione um cliente'}</option>
-                      {clients.map((client, index) => (
-                        <option key={index} value={client.client_data.cpf}>
-                          {client.client_data.nome} ({client.client_data.cpf})
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="text"
-                      placeholder="Nome completo"
-                      value={clientData.nome}
-                      onChange={(e) => setClientData({...clientData, nome: e.target.value})}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <div className="grid grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="CPF / CNPJ"
-                        value={clientData.cpf}
-                        onChange={(e) => setClientData({...clientData, cpf: e.target.value})}
-                        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                      <input
-                        type="text"
-                        placeholder="RG / Inscrição Estadual"
-                        value={clientData.rg}
-                        onChange={(e) => setClientData({...clientData, rg: e.target.value})}
-                        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Endereço"
-                        value={clientData.endereco}
-                        onChange={(e) => setClientData({...clientData, endereco: e.target.value})}
-                        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Bairro"
-                        value={clientData.bairro}
-                        onChange={(e) => setClientData({...clientData, bairro: e.target.value})}
-                        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Telefone"
-                        value={clientData.telefone}
-                        onChange={(e) => setClientData({...clientData, telefone: e.target.value})}
-                        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Email"
-                        value={clientData.email}
-                        onChange={(e) => setClientData({...clientData, email: e.target.value})}
-                        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Dados do serviço */}
-                {contractType === 'garagem' && (
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados do Serviço</h3>
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="text"
-                          placeholder="Veículo (marca/modelo)"
-                          value={serviceData.veiculo}
-                          onChange={(e) => setServiceData({...serviceData, veiculo: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Placa"
-                          value={serviceData.placa}
-                          onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <textarea
-                        placeholder="Descrição dos serviços"
-                        value={serviceData.servicos}
-                        onChange={(e) => setServiceData({...serviceData, servicos: e.target.value})}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-24"
-                      />
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="text"
-                          placeholder="Valor total (R$)"
-                          value={serviceData.valor}
-                          onChange={(e) => setServiceData({...serviceData, valor: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Prazo de entrega"
-                          value={serviceData.prazo}
-                          onChange={(e) => setServiceData({...serviceData, prazo: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <textarea
-                        placeholder="Observações adicionais"
-                        value={serviceData.observacoes}
-                        onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-20"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {contractType === 'locadora' && (
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados da Locação</h3>
+            <>
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* Formulário */}
+                <div className="space-y-6">
+                  {/* Cliente */}
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados do Cliente</h3>
                     <div className="space-y-4">
                       <select
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         onChange={(e) => {
-                          const selected = cars.find(car => car.plate === e.target.value);
-                          if (selected) {
-                            setServiceData({
-                              ...serviceData,
-                              modelo: selected.model,
-                              anoFabricacao: selected.year,
-                              placa: selected.plate,
-                              valorDiaria: selected.price,
-                              // Adicione outros campos do carro que você queira preencher automaticamente
-                            });
-                          }
+                          const selected = clients.find(c => c.client_data.cpf === e.target.value);
+                          if (selected) setClientData(selected.client_data);
                         }}
-                        value={serviceData.placa || ''}
+                        value={clientData.cpf || ''}
                       >
-                        <option value="">{loadingCars ? 'Carregando carros...' : 'Selecione um carro'}</option>
-                        {cars.map((car, index) => (
-                          <option key={index} value={car.plate}>
-                            {car.brand} {car.model} ({car.plate})
+                        <option value="">{loadingClients ? 'Carregando clientes...' : 'Selecione um cliente'}</option>
+                        {clients.map((client, index) => (
+                          <option key={index} value={client.client_data.cpf}>
+                            {client.client_data.nome} ({client.client_data.cpf})
                           </option>
                         ))}
                       </select>
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="text"
-                          placeholder="Modelo do veículo"
-                          value={serviceData.modelo}
-                          onChange={(e) => setServiceData({...serviceData, modelo: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Ano de fabricação"
-                          value={serviceData.anoFabricacao}
-                          onChange={(e) => setServiceData({...serviceData, anoFabricacao: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                      </div>
-                      <div className="grid grid-cols-3 gap-4">
-                        <input
-                          type="text"
-                          placeholder="Cor"
-                          value={serviceData.cor}
-                          onChange={(e) => setServiceData({...serviceData, cor: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Placa"
-                          value={serviceData.placa}
-                          onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="RENAVAM"
-                          value={serviceData.renavam}
-                          onChange={(e) => setServiceData({...serviceData, renavam: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="date"
-                          placeholder="Data de Início"
-                          value={serviceData.dataInicio}
-                          onChange={(e) => setServiceData({...serviceData, dataInicio: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                        <input
-                          type="date"
-                          placeholder="Data de Fim"
-                          value={serviceData.dataFim}
-                          onChange={(e) => setServiceData({...serviceData, dataFim: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-              type="text"
-              name="color"
-              placeholder="Cor"
-              value={newCar.color}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-          </div>
-                        <div className="p-3 border border-gray-300 rounded-lg bg-gray-100">
-                          <span className="text-sm text-gray-500">Total: R$ {total} ({dias} dias)</span>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-3 gap-4">
-                        <input
-                          type="text"
-                          placeholder="Valor da Caução (R$)"
-                          value={serviceData.caucao}
-                          onChange={(e) => setServiceData({...serviceData, caucao: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="KM Inicial"
-                          value={serviceData.kmInicial}
-                          onChange={(e) => setServiceData({...serviceData, kmInicial: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                         <input
-                          type="text"
-                          placeholder="Valor de Mercado (R$)"
-                          value={serviceData.valorMercado}
-                          onChange={(e) => setServiceData({...serviceData, valorMercado: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
-                      </div>
-                      <textarea
-                        placeholder="Observações Adicionais"
-                        value={serviceData.observacoes}
-                        onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 h-20"
+                      <input
+                        type="text"
+                        placeholder="Nome completo"
+                        value={clientData.nome}
+                        onChange={(e) => setClientData({...clientData, nome: e.target.value})}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
+                      <div className="grid grid-cols-2 gap-4">
+                        <input
+                          type="text"
+                          placeholder="CPF / CNPJ"
+                          value={clientData.cpf}
+                          onChange={(e) => setClientData({...clientData, cpf: e.target.value})}
+                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                          type="text"
+                          placeholder="RG / Inscrição Estadual"
+                          value={clientData.rg}
+                          onChange={(e) => setClientData({...clientData, rg: e.target.value})}
+                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <input
+                          type="text"
+                          placeholder="Endereço"
+                          value={clientData.endereco}
+                          onChange={(e) => setClientData({...clientData, endereco: e.target.value})}
+                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Bairro"
+                          value={clientData.bairro}
+                          onChange={(e) => setClientData({...clientData, bairro: e.target.value})}
+                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <input
+                          type="text"
+                          placeholder="Telefone"
+                          value={clientData.telefone}
+                          onChange={(e) => setClientData({...clientData, telefone: e.target.value})}
+                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                          type="email"
+                          placeholder="Email"
+                          value={clientData.email}
+                          onChange={(e) => setClientData({...clientData, email: e.target.value})}
+                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
                     </div>
                   </div>
-                )}
 
-                <button
-                  onClick={generateContract}
-                  disabled={isGenerating || !clientData.nome}
-                  className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all ${contractType === 'garagem' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
-                >
-                  {isGenerating ? 'Gerando...' : 'Gerar Contrato'}
-                </button>
-              </div>
-
-              {/* Preview do contrato */}
-              <div className="bg-white border border-gray-200 rounded-lg p-6 print:border-none" id="contract-preview-container">
-                <div className="bg-gray-50 rounded-lg p-4 overflow-y-auto print:bg-white print:p-0">
-                  {generatedContract ? (
-                    <div>
-                      <img src={logo} alt="Logo" className="w-48 mx-auto mb-4" />
-                      {generatedContract}
+                  {/* Dados do serviço */}
+                  {contractType === 'garagem' && (
+                    <div className="bg-blue-50 p-4 rounded-lg">
+                      <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados do Serviço</h3>
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <input
+                            type="text"
+                            placeholder="Veículo (marca/modelo)"
+                            value={serviceData.veiculo}
+                            onChange={(e) => setServiceData({...serviceData, veiculo: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Placa"
+                            value={serviceData.placa}
+                            onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                        </div>
+                        <textarea
+                          placeholder="Descrição dos serviços"
+                          value={serviceData.servicos}
+                          onChange={(e) => setServiceData({...serviceData, servicos: e.target.value})}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-24"
+                        />
+                        <div className="grid grid-cols-2 gap-4">
+                          <input
+                            type="text"
+                            placeholder="Valor total (R$)"
+                            value={serviceData.valor}
+                            onChange={(e) => setServiceData({...serviceData, valor: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Prazo de entrega"
+                            value={serviceData.prazo}
+                            onChange={(e) => setServiceData({...serviceData, prazo: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                        </div>
+                        <textarea
+                          placeholder="Observações adicionais"
+                          value={serviceData.observacoes}
+                          onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-20"
+                        />
+                      </div>
                     </div>
-                  ) : (
-                    <p className="text-gray-500">O contrato gerado aparecerá aqui.</p>
+                  )}
+
+                  {contractType === 'locadora' && (
+                    <div className="bg-green-50 p-4 rounded-lg">
+                      <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados da Locação</h3>
+                      <div className="space-y-4">
+                        <select
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          onChange={(e) => {
+                            const selected = cars.find(car => car.plate === e.target.value);
+                            if (selected) {
+                              setServiceData({
+                                ...serviceData,
+                                modelo: selected.model,
+                                anoFabricacao: selected.year,
+                                placa: selected.plate,
+                                valorDiaria: selected.price,
+                                // Adicione outros campos do carro que você queira preencher automaticamente
+                              });
+                            }
+                          }}
+                          value={serviceData.placa || ''}
+                        >
+                          <option value="">{loadingCars ? 'Carregando carros...' : 'Selecione um carro'}</option>
+                          {cars.map((car, index) => (
+                            <option key={index} value={car.plate}>
+                              {car.brand} {car.model} ({car.plate})
+                            </option>
+                          ))}
+                        </select>
+                        <div className="grid grid-cols-2 gap-4">
+                          <input
+                            type="text"
+                            placeholder="Modelo do veículo"
+                            value={serviceData.modelo}
+                            onChange={(e) => setServiceData({...serviceData, modelo: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Ano de fabricação"
+                            value={serviceData.anoFabricacao}
+                            onChange={(e) => setServiceData({...serviceData, anoFabricacao: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                          <input
+                            type="text"
+                            placeholder="Cor"
+                            value={serviceData.cor}
+                            onChange={(e) => setServiceData({...serviceData, cor: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Placa"
+                            value={serviceData.placa}
+                            onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="RENAVAM"
+                            value={serviceData.renavam}
+                            onChange={(e) => setServiceData({...serviceData, renavam: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <input
+                            type="date"
+                            placeholder="Data de Início"
+                            value={serviceData.dataInicio}
+                            onChange={(e) => setServiceData({...serviceData, dataInicio: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                          <input
+                            type="date"
+                            placeholder="Data de Fim"
+                            value={serviceData.dataFim}
+                            onChange={(e) => setServiceData({...serviceData, dataFim: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <input
+                            type="text"
+                            placeholder="Valor da Diária (R$)"
+                            value={serviceData.valorDiaria}
+                            onChange={(e) => setServiceData({...serviceData, valorDiaria: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                          <div className="p-3 border border-gray-300 rounded-lg bg-gray-100">
+                            <span className="text-sm text-gray-500">Total: R$ {total} ({dias} dias)</span>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                          <input
+                            type="text"
+                            placeholder="Valor da Caução (R$)"
+                            value={serviceData.caucao}
+                            onChange={(e) => setServiceData({...serviceData, caucao: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="KM Inicial"
+                            value={serviceData.kmInicial}
+                            onChange={(e) => setServiceData({...serviceData, kmInicial: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Valor de Mercado (R$)"
+                            value={serviceData.valorMercado}
+                            onChange={(e) => setServiceData({...serviceData, valorMercado: e.target.value})}
+                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                          />
+                        </div>
+                        <textarea
+                          placeholder="Observações Adicionais"
+                          value={serviceData.observacoes}
+                          onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 h-20"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    onClick={generateContract}
+                    disabled={isGenerating || !clientData.nome}
+                    className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all ${contractType === 'garagem' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
+                  >
+                    {isGenerating ? 'Gerando...' : 'Gerar Contrato'}
+                  </button>
+                </div>
+
+                {/* Preview do contrato */}
+                <div className="bg-white border border-gray-200 rounded-lg p-6 print:border-none" id="contract-preview-container">
+                  <div className="bg-gray-50 rounded-lg p-4 overflow-y-auto print:bg-white print:p-0">
+                    {generatedContract ? (
+                      <div>
+                        <img src={logo} alt="Logo" className="w-48 mx-auto mb-4" />
+                        {generatedContract}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500">O contrato gerado aparecerá aqui.</p>
+                    )}
+                  </div>
+                  {generatedContract && (
+                    <div className="flex items-center gap-4 mt-4 print:hidden">
+                      <button
+                        onClick={() => window.print()}
+                        className="w-full py-2 px-4 rounded-lg font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
+                      >
+                        <Download className="w-5 h-5" />
+                        Imprimir / Salvar PDF
+                      </button>
+                      <button
+                        onClick={() => setGeneratedContract(null)}
+                        className="w-full py-2 px-4 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+                      >
+                        <Wrench className="w-5 h-5" />
+                        Editar
+                      </button>
+                    </div>
                   )}
                 </div>
-                {generatedContract && (
-                  <button
-                    onClick={() => window.print()}
-                    className="mt-4 w-full py-2 px-4 rounded-lg font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all flex items-center justify-center gap-2 print:hidden"
-                  >
-                    <Download className="w-5 h-5" />
-                    Imprimir / Salvar PDF
-                  </button>
-                )}
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
