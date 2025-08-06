@@ -255,12 +255,12 @@ const ContractGenerator = () => {
           <br/>
           <div className="flex flex-wrap justify-around text-left">
             <div className="w-full sm:w-2/5">
-              <p>1. _________________________</p>
+              <p>1. <span className="inline-block w-full border-b border-black"></span></p>
               <p>Nome:</p>
               <p>CPF:</p>
             </div>
             <div className="w-full sm:w-2/5">
-              <p>2. _________________________</p>
+              <p>2. <span className="inline-block w-full border-b border-black"></span></p>
               <p>Nome:</p>
               <p>CPF:</p>
             </div>
