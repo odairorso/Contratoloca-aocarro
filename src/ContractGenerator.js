@@ -132,6 +132,12 @@ const ContractGenerator = () => {
     const month = today.toLocaleString('pt-BR', { month: 'long' }).toUpperCase();
     const year = today.getFullYear();
 
+    const formatDate = (dateString) => {
+      if (!dateString) return '';
+      const [year, month, day] = dateString.split('-');
+      return `${day}/${month}/${year}`;
+    };
+
     const contractHTML = `
       <div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5;">
         <h2 style="text-align: center; font-weight: bold;">CONTRATO DE LOCAÇÃO DE VEÍCULO</h2>
@@ -159,7 +165,7 @@ const ContractGenerator = () => {
         <p><strong>§ 5º.</strong> O valor do aluguel firmado neste contrato será reajustado a cada 12 (doze) meses, tendo como base o índice IGP. Em caso de falta deste índice, o reajuste do valor da locação terá por base a média da variação dos índices inflacionários do ano corrente ao da execução da locação.</p>
         <br/>
         <p><strong>CLÁUSULA 3ª – DO PRAZO DO ALUGUEL</strong></p>
-        <p>O prazo de locação do referido veículo é de ${serviceData.dataInicio} A ${serviceData.dataFim} ENTREGAR ATE AS 8:00 DA MANHÃ.</p>
+        <p>O prazo de locação do referido veículo é de ${formatDate(serviceData.dataInicio)} A ${formatDate(serviceData.dataFim)} ENTREGAR ATE AS 8:00 DA MANHÃ.</p>
         <p><strong>§ 1º.</strong> Ao final do prazo estipulado, caso as partes permaneçam inertes, a locação prorrogar-se-á automaticamente por tempo indeterminado.</p>
         <p><strong>§ 2º.</strong> Caso a LOCADORA não queira prorrogar a locação ao terminar o prazo estipulado neste contrato, e o referido veículo não for devolvido, será cobrado o valor do aluguel proporcional aos dias de atraso acumulado de multa diária de R$ ${serviceData.valorDiaria}.</p>
         <p><strong>§ 3º.</strong> Finda a locação, o LOCATÁRIO deverá devolver o veículo nas mesmas condições em que recebeu, salvo os desgastes decorrentes do uso normal, sob pena de indenização por perdas e danos a ser apurada.</p>
