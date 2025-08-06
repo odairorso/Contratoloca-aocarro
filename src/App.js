@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ContractGenerator from './ContractGenerator';
 import ClientList from './ClientList';
 import CarManagement from './CarManagement';
+import ClientEditor from './ClientEditor';
 import logo from './logo.jpg';
 import './App.css';
 
@@ -12,12 +13,11 @@ function App() {
 
   const handleEditClient = (client) => {
     setEditingClient(client);
-    setPage('generator'); // Ou para uma página de edição de cliente dedicada
   };
 
   const handleEditCar = (car) => {
     setEditingCar(car);
-    setPage('cars'); // Ou para uma página de edição de carro dedicada
+    setPage('cars');
   };
 
   return (
@@ -52,7 +52,15 @@ function App() {
       </header>
       <main>
         {page === 'generator' && <ContractGenerator editingClient={editingClient} setEditingClient={setEditingClient} />}
-        {page === 'clients' && <ClientList onSelectClient={() => {}} onEditClient={handleEditClient} />}
+        {page === 'clients' && (
+          <>
+            {editingClient ? (
+              <ClientEditor editingClient={editingClient} setEditingClient={setEditingClient} />
+            ) : (
+              <ClientList onSelectClient={() => {}} onEditClient={handleEditClient} />
+            )}
+          </>
+        )}
         {page === 'cars' && <CarManagement editingCar={editingCar} setEditingCar={setEditingCar} onEditCar={handleEditCar} />}
       </main>
     </div>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
-import { Car, Search } from 'lucide-react';
+import { Car, Search, Edit } from 'lucide-react';
 
-const CarManagement = ({ onEditCar }) => {
+const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,8 +13,18 @@ const CarManagement = ({ onEditCar }) => {
     plate: '',
     price: '',
     color: '',
-    value: ''
+    value: '',
+    renavam: ''
   });
+  const [editingCarData, setEditingCarData] = useState(null);
+
+  useEffect(() => {
+    if (editingCar) {
+      setEditingCarData(editingCar);
+    } else {
+      setEditingCarData(null);
+    }
+  }, [editingCar]);
 
   const fetchCars = async () => {
     setLoading(true);
@@ -54,7 +64,7 @@ const CarManagement = ({ onEditCar }) => {
       alert('Erro ao adicionar carro: ' + error.message);
     } else {
       alert('Carro adicionado com sucesso!');
-      setNewCar({ brand: '', model: '', year: '', plate: '', price: '', color: '', value: '' });
+      setNewCar({ brand: '', model: '', year: '', plate: '', price: '', color: '', value: '', renavam: '' });
       fetchCars();
     }
   };
@@ -71,84 +81,208 @@ const CarManagement = ({ onEditCar }) => {
     }
   };
 
+  const handleUpdateCar = async (e) => {
+    e.preventDefault();
+    const { data, error } = await supabase.from('cars').update(editingCarData).eq('id', editingCarData.id);
+    if (error) {
+      alert('Erro ao atualizar carro: ' + error.message);
+    } else {
+      alert('Carro atualizado com sucesso!');
+      setEditingCar(null);
+      fetchCars();
+    }
+  };
+
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditingCarData({ ...editingCarData, [name]: value });
+  };
+
+
   return (
     <div className="p-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-6 mb-6">
-        <div className="flex items-center gap-3 mb-6">
-          <Car className="w-8 h-8 text-blue-600" />
-          <h2 className="text-2xl font-bold text-gray-800">Cadastrar Novo Carro</h2>
-        </div>
-        <form onSubmit={handleAddCar}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="brand"
-              placeholder="Marca"
-              value={newCar.brand}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="text"
-              name="model"
-              placeholder="Modelo"
-              value={newCar.model}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="number"
-              name="year"
-              placeholder="Ano"
-              value={newCar.year}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="text"
-              name="plate"
-              placeholder="Placa"
-              value={newCar.plate}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="number"
-              name="price"
-              placeholder="Preço da Diária"
-              value={newCar.price}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="text"
-              name="color"
-              placeholder="Cor"
-              value={newCar.color}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="number"
-              name="value"
-              placeholder="Valor do Veículo"
-              value={newCar.value}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
+      {editingCarData ? (
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-6 mb-6">
+          <div className="flex items-center gap-3 mb-6">
+            <Edit className="w-8 h-8 text-blue-600" />
+            <h2 className="text-2xl font-bold text-gray-800">Editar Carro</h2>
           </div>
-          <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Adicionar Carro
-          </button>
-        </form>
-      </div>
+          <form onSubmit={handleUpdateCar}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="brand"
+                placeholder="Marca"
+                value={editingCarData.brand}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="model"
+                placeholder="Modelo"
+                value={editingCarData.model}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="number"
+                name="year"
+                placeholder="Ano"
+                value={editingCarData.year}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="plate"
+                placeholder="Placa"
+                value={editingCarData.plate}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="renavam"
+                placeholder="RENAVAM"
+                value={editingCarData.renavam}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="number"
+                name="price"
+                placeholder="Preço da Diária"
+                value={editingCarData.price}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="color"
+                placeholder="Cor"
+                value={editingCarData.color}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="number"
+                name="value"
+                placeholder="Valor do Veículo"
+                value={editingCarData.value}
+                onChange={handleEditInputChange}
+                className="p-2 border rounded"
+                required
+              />
+            </div>
+            <div className="mt-4">
+              <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Salvar Alterações
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditingCar(null)}
+                className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : (
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-6 mb-6">
+          <div className="flex items-center gap-3 mb-6">
+            <Car className="w-8 h-8 text-blue-600" />
+            <h2 className="text-2xl font-bold text-gray-800">Cadastrar Novo Carro</h2>
+          </div>
+          <form onSubmit={handleAddCar}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="brand"
+                placeholder="Marca"
+                value={newCar.brand}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="model"
+                placeholder="Modelo"
+                value={newCar.model}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="number"
+                name="year"
+                placeholder="Ano"
+                value={newCar.year}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="plate"
+                placeholder="Placa"
+                value={newCar.plate}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="renavam"
+                placeholder="RENAVAM"
+                value={newCar.renavam}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="number"
+                name="price"
+                placeholder="Preço da Diária"
+                value={newCar.price}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="text"
+                name="color"
+                placeholder="Cor"
+                value={newCar.color}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+              <input
+                type="number"
+                name="value"
+                placeholder="Valor do Veículo"
+                value={newCar.value}
+                onChange={handleInputChange}
+                className="p-2 border rounded"
+                required
+              />
+            </div>
+            <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Adicionar Carro
+            </button>
+          </form>
+        </div>
+      )}
 
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-6">
         <div className="flex items-center gap-3 mb-6">
@@ -175,6 +309,7 @@ const CarManagement = ({ onEditCar }) => {
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Modelo</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ano</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Placa</th>
+                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">RENAVAM</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Diária (R$)</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Cor</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Valor</th>
@@ -188,6 +323,7 @@ const CarManagement = ({ onEditCar }) => {
                     <td className="py-4 px-4 whitespace-nowrap">{car.model}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.year}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.plate}</td>
+                    <td className="py-4 px-4 whitespace-nowrap">{car.renavam}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.price}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.color}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.value}</td>
