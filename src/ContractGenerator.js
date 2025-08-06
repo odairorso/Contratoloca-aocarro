@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Car, FileText, Send, Download, Wrench } from 'lucide-react';
+import { Car, FileText, Send, Download, Wrench, User, Calendar, DollarSign, MapPin, Phone, Mail, Hash, Palette, Clock, Loader, CheckCircle, AlertCircle, Printer, Edit } from 'lucide-react';
 import { supabase } from './supabaseClient';
 import logo from './logo.jpg';
 
@@ -260,290 +260,514 @@ const ContractGenerator = () => {
   };
 
   return (
-    <div className="p-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-xl p-6 mb-6">
-          {/* Seleção do tipo de contrato */}
-          <div className="grid md:grid-cols-2 gap-4 mb-8">
-            <button
-              onClick={() => setContractType('venda')}
-              className={`p-6 rounded-lg border-2 transition-all ${contractType === 'venda' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'}`}
-            >
-              <FileText className="w-12 h-12 text-blue-600 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold mb-2">Venda de Veículos</h3>
-              <p className="text-gray-600">Contrato para a venda de carros e outros veículos.</p>
-            </button>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            Gerador de Contratos
+          </h1>
+          <p className="text-gray-600 text-lg">Crie contratos profissionais de forma rápida e eficiente</p>
+        </div>
 
-            <button
-              onClick={() => setContractType('locadora')}
-              className={`p-6 rounded-lg border-2 transition-all ${contractType === 'locadora' ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:border-green-300'}`}
-            >
-              <Car className="w-12 h-12 text-green-600 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold mb-2">Locação de Veículos</h3>
-              <p className="text-gray-600">Contrato para aluguel de carros e veículos</p>
-            </button>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-100 p-6 sm:p-8 mb-6">
+          {/* Seleção do tipo de contrato */}
+          <div className="mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+              Tipo de Contrato
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <button
+                onClick={() => setContractType('venda')}
+                className={`group p-6 rounded-2xl border-2 transition-all duration-300 transform hover:scale-105 ${
+                  contractType === 'venda' 
+                    ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg' 
+                    : 'border-gray-200 hover:border-blue-300 hover:shadow-md bg-white'
+                }`}
+              >
+                <div className={`p-4 rounded-2xl mb-4 mx-auto w-fit ${
+                  contractType === 'venda' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600' 
+                    : 'bg-gray-100 group-hover:bg-blue-100'
+                }`}>
+                  <FileText className={`w-8 h-8 ${
+                    contractType === 'venda' ? 'text-white' : 'text-gray-600 group-hover:text-blue-600'
+                  }`} />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">Venda de Veículos</h3>
+                <p className="text-gray-600 text-sm">Contrato para a venda de carros e outros veículos</p>
+                {contractType === 'venda' && (
+                  <div className="mt-3 flex items-center justify-center gap-2 text-blue-600">
+                    <CheckCircle className="w-5 h-5" />
+                    <span className="text-sm font-medium">Selecionado</span>
+                  </div>
+                )}
+              </button>
+
+              <button
+                onClick={() => setContractType('locadora')}
+                className={`group p-6 rounded-2xl border-2 transition-all duration-300 transform hover:scale-105 ${
+                  contractType === 'locadora' 
+                    ? 'border-green-500 bg-gradient-to-br from-green-50 to-emerald-50 shadow-lg' 
+                    : 'border-gray-200 hover:border-green-300 hover:shadow-md bg-white'
+                }`}
+              >
+                <div className={`p-4 rounded-2xl mb-4 mx-auto w-fit ${
+                  contractType === 'locadora' 
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-600' 
+                    : 'bg-gray-100 group-hover:bg-green-100'
+                }`}>
+                  <Car className={`w-8 h-8 ${
+                    contractType === 'locadora' ? 'text-white' : 'text-gray-600 group-hover:text-green-600'
+                  }`} />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">Locação de Veículos</h3>
+                <p className="text-gray-600 text-sm">Contrato para aluguel de carros e veículos</p>
+                {contractType === 'locadora' && (
+                  <div className="mt-3 flex items-center justify-center gap-2 text-green-600">
+                    <CheckCircle className="w-5 h-5" />
+                    <span className="text-sm font-medium">Selecionado</span>
+                  </div>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Formulário e Preview */}
           {contractType && (
             <>
-              <div className="grid lg:grid-cols-2 gap-8">
+              <div className="grid xl:grid-cols-2 gap-8">
                 {/* Formulário */}
                 <div className="space-y-6">
                   {/* Cliente */}
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados do Cliente</h3>
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-200">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl">
+                        <User className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-800">Dados do Cliente</h3>
+                        <p className="text-gray-600 text-sm">Informações pessoais do contratante</p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
-                      <select
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        onChange={(e) => {
-                          const selected = clients.find(c => c.client_data.cpf === e.target.value);
-                          if (selected) setClientData(selected.client_data);
-                        }}
-                        value={clientData.cpf || ''}
-                      >
-                        <option value="">{loadingClients ? 'Carregando clientes...' : 'Selecione um cliente'}</option>
-                        {clients.map((client, index) => (
-                          <option key={index} value={client.client_data.cpf}>
-                            {client.client_data.nome} ({client.client_data.cpf})
-                          </option>
-                        ))}
-                      </select>
-                      <input
-                        type="text"
-                        placeholder="Nome completo"
-                        value={clientData.nome}
-                        onChange={(e) => setClientData({...clientData, nome: e.target.value})}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <select
+                          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                          onChange={(e) => {
+                            const selected = clients.find(c => c.client_data.cpf === e.target.value);
+                            if (selected) setClientData(selected.client_data);
+                          }}
+                          value={clientData.cpf || ''}
+                        >
+                          <option value="">{loadingClients ? 'Carregando clientes...' : 'Selecione um cliente existente'}</option>
+                          {clients.map((client, index) => (
+                            <option key={index} value={client.client_data.cpf}>
+                              {client.client_data.nome} ({client.client_data.cpf})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">Nome Completo</label>
                         <input
                           type="text"
-                          placeholder="CPF / CNPJ"
-                          value={clientData.cpf}
-                          onChange={(e) => setClientData({...clientData, cpf: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="RG / Inscrição Estadual"
-                          value={clientData.rg}
-                          onChange={(e) => setClientData({...clientData, rg: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Ex: João Silva Santos"
+                          value={clientData.nome}
+                          onChange={(e) => setClientData({...clientData, nome: e.target.value})}
+                          className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="text"
-                          placeholder="Endereço"
-                          value={clientData.endereco}
-                          onChange={(e) => setClientData({...clientData, endereco: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Bairro"
-                          value={clientData.bairro}
-                          onChange={(e) => setClientData({...clientData, bairro: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
+                      
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                            <Hash className="w-4 h-4" />
+                            CPF / CNPJ
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="000.000.000-00"
+                            value={clientData.cpf}
+                            onChange={(e) => setClientData({...clientData, cpf: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">RG / Inscrição Estadual</label>
+                          <input
+                            type="text"
+                            placeholder="00.000.000-0"
+                            value={clientData.rg}
+                            onChange={(e) => setClientData({...clientData, rg: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
+                          />
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="text"
-                          placeholder="Telefone"
-                          value={clientData.telefone}
-                          onChange={(e) => setClientData({...clientData, telefone: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <input
-                          type="email"
-                          placeholder="Email"
-                          value={clientData.email}
-                          onChange={(e) => setClientData({...clientData, email: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
+                      
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                            <MapPin className="w-4 h-4" />
+                            Endereço
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Rua, número"
+                            value={clientData.endereco}
+                            onChange={(e) => setClientData({...clientData, endereco: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Bairro</label>
+                          <input
+                            type="text"
+                            placeholder="Centro"
+                            value={clientData.bairro}
+                            onChange={(e) => setClientData({...clientData, bairro: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                            <Phone className="w-4 h-4" />
+                            Telefone
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="(67) 99999-9999"
+                            value={clientData.telefone}
+                            onChange={(e) => setClientData({...clientData, telefone: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                            <Mail className="w-4 h-4" />
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            placeholder="cliente@email.com"
+                            value={clientData.email}
+                            onChange={(e) => setClientData({...clientData, email: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Dados do serviço */}
                   {contractType === 'garagem' && (
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados do Serviço</h3>
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-200">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl">
+                          <Wrench className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-800">Dados do Serviço</h3>
+                          <p className="text-gray-600 text-sm">Informações sobre o serviço prestado</p>
+                        </div>
+                      </div>
                       <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <input
-                            type="text"
-                            placeholder="Veículo (marca/modelo)"
-                            value={serviceData.veiculo}
-                            onChange={(e) => setServiceData({...serviceData, veiculo: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Placa"
-                            value={serviceData.placa}
-                            onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Car className="w-4 h-4" />
+                              Veículo
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Ex: Honda Civic 2020"
+                              value={serviceData.veiculo}
+                              onChange={(e) => setServiceData({...serviceData, veiculo: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Placa</label>
+                            <input
+                              type="text"
+                              placeholder="ABC-1234"
+                              value={serviceData.placa}
+                              onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Descrição dos Serviços</label>
+                          <textarea
+                            placeholder="Descreva detalhadamente os serviços a serem realizados..."
+                            value={serviceData.servicos}
+                            onChange={(e) => setServiceData({...serviceData, servicos: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm h-24 resize-none"
                           />
                         </div>
-                        <textarea
-                          placeholder="Descrição dos serviços"
-                          value={serviceData.servicos}
-                          onChange={(e) => setServiceData({...serviceData, servicos: e.target.value})}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-24"
-                        />
-                        <div className="grid grid-cols-2 gap-4">
-                          <input
-                            type="text"
-                            placeholder="Valor total (R$)"
-                            value={serviceData.valor}
-                            onChange={(e) => setServiceData({...serviceData, valor: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Prazo de entrega"
-                            value={serviceData.prazo}
-                            onChange={(e) => setServiceData({...serviceData, prazo: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <DollarSign className="w-4 h-4" />
+                              Valor Total (R$)
+                            </label>
+                            <input
+                              type="number"
+                              placeholder="1500.00"
+                              step="0.01"
+                              value={serviceData.valor}
+                              onChange={(e) => setServiceData({...serviceData, valor: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Clock className="w-4 h-4" />
+                              Prazo de Entrega
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Ex: 5 dias úteis"
+                              value={serviceData.prazo}
+                              onChange={(e) => setServiceData({...serviceData, prazo: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Observações</label>
+                          <textarea
+                            placeholder="Informações adicionais sobre o serviço..."
+                            value={serviceData.observacoes}
+                            onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm h-20 resize-none"
                           />
                         </div>
-                        <textarea
-                          placeholder="Observações adicionais"
-                          value={serviceData.observacoes}
-                          onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-20"
-                        />
                       </div>
                     </div>
                   )}
 
                   {contractType === 'locadora' && (
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados da Locação</h3>
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border border-green-200">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
+                          <Car className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-800">Dados da Locação</h3>
+                          <p className="text-gray-600 text-sm">Informações do veículo e período</p>
+                        </div>
+                      </div>
                       <div className="space-y-4">
-                        <select
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          onChange={(e) => {
-                            const selected = cars.find(car => car.plate === e.target.value);
-                            if (selected) {
-                              setServiceData({
-                                ...serviceData,
-                                modelo: selected.model,
-                                anoFabricacao: selected.year,
-                                placa: selected.plate,
-                                valorDiaria: selected.price,
-                                // Adicione outros campos do carro que você queira preencher automaticamente
-                              });
-                            }
-                          }}
-                          value={serviceData.placa || ''}
-                        >
-                          <option value="">{loadingCars ? 'Carregando carros...' : 'Selecione um carro'}</option>
-                          {cars.map((car, index) => (
-                            <option key={index} value={car.plate}>
-                              {car.brand} {car.model} ({car.plate})
-                            </option>
-                          ))}
-                        </select>
-                        <div className="grid grid-cols-2 gap-4">
-                          <input
-                            type="text"
-                            placeholder="Modelo do veículo"
-                            value={serviceData.modelo}
-                            onChange={(e) => setServiceData({...serviceData, modelo: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Ano de fabricação"
-                            value={serviceData.anoFabricacao}
-                            onChange={(e) => setServiceData({...serviceData, anoFabricacao: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                            <Car className="w-4 h-4" />
+                            Selecionar Veículo
+                          </label>
+                          <select
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            onChange={(e) => {
+                              const selected = cars.find(car => car.plate === e.target.value);
+                              if (selected) {
+                                setServiceData({
+                                  ...serviceData,
+                                  modelo: `${selected.brand} ${selected.model}`,
+                                  anoFabricacao: selected.year,
+                                  placa: selected.plate,
+                                  renavam: selected.renavam,
+                                  valorDiaria: selected.price,
+                                  cor: selected.color,
+                                  valorMercado: selected.value
+                                });
+                              }
+                            }}
+                            value={serviceData.placa || ''}
+                          >
+                            <option value="">{loadingCars ? 'Carregando veículos...' : 'Selecione um veículo'}</option>
+                            {cars.map((car, index) => (
+                              <option key={index} value={car.plate}>
+                                {car.brand} {car.model} ({car.plate}) - R$ {parseFloat(car.price || 0).toFixed(2)}/dia
+                              </option>
+                            ))}
+                          </select>
                         </div>
-                        <div className="grid grid-cols-3 gap-4">
-                          <input
-                            type="text"
-                            placeholder="Cor"
-                            value={serviceData.cor}
-                            onChange={(e) => setServiceData({...serviceData, cor: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Placa"
-                            value={serviceData.placa}
-                            onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="RENAVAM"
-                            value={serviceData.renavam}
-                            onChange={(e) => setServiceData({...serviceData, renavam: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <input
-                            type="date"
-                            placeholder="Data de Início"
-                            value={serviceData.dataInicio}
-                            onChange={(e) => setServiceData({...serviceData, dataInicio: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                          <input
-                            type="date"
-                            placeholder="Data de Fim"
-                            value={serviceData.dataFim}
-                            onChange={(e) => setServiceData({...serviceData, dataFim: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <input
-                            type="text"
-                            placeholder="Valor da Diária (R$)"
-                            value={serviceData.valorDiaria}
-                            onChange={(e) => setServiceData({...serviceData, valorDiaria: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                          <div className="p-3 border border-gray-300 rounded-lg bg-gray-100">
-                            <span className="text-sm text-gray-500">Total: R$ {total} ({dias} dias)</span>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Modelo do Veículo</label>
+                            <input
+                              type="text"
+                              placeholder="Ex: Toyota Corolla"
+                              value={serviceData.modelo}
+                              onChange={(e) => setServiceData({...serviceData, modelo: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Calendar className="w-4 h-4" />
+                              Ano de Fabricação
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="2023"
+                              value={serviceData.anoFabricacao}
+                              onChange={(e) => setServiceData({...serviceData, anoFabricacao: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
                           </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-4">
-                          <input
-                            type="text"
-                            placeholder="Valor da Caução (R$)"
-                            value={serviceData.caucao}
-                            onChange={(e) => setServiceData({...serviceData, caucao: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="KM Inicial"
-                            value={serviceData.kmInicial}
-                            onChange={(e) => setServiceData({...serviceData, kmInicial: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Valor de Mercado (R$)"
-                            value={serviceData.valorMercado}
-                            onChange={(e) => setServiceData({...serviceData, valorMercado: e.target.value})}
-                            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          />
+                        
+                        <div className="grid sm:grid-cols-3 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Palette className="w-4 h-4" />
+                              Cor
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Branco"
+                              value={serviceData.cor}
+                              onChange={(e) => setServiceData({...serviceData, cor: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Placa</label>
+                            <input
+                              type="text"
+                              placeholder="ABC-1234"
+                              value={serviceData.placa}
+                              onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Hash className="w-4 h-4" />
+                              RENAVAM
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="12345678901"
+                              value={serviceData.renavam}
+                              onChange={(e) => setServiceData({...serviceData, renavam: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
+                            />
+                          </div>
                         </div>
-                        <textarea
-                          placeholder="Observações Adicionais"
-                          value={serviceData.observacoes}
-                          onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 h-20"
-                        />
+                        
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Calendar className="w-4 h-4" />
+                              Data de Início
+                            </label>
+                            <input
+                              type="date"
+                              value={serviceData.dataInicio}
+                              onChange={(e) => setServiceData({...serviceData, dataInicio: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Calendar className="w-4 h-4" />
+                              Data de Fim
+                            </label>
+                            <input
+                              type="date"
+                              value={serviceData.dataFim}
+                              onChange={(e) => setServiceData({...serviceData, dataFim: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <DollarSign className="w-4 h-4" />
+                              Valor da Diária (R$)
+                            </label>
+                            <input
+                              type="number"
+                              placeholder="150.00"
+                              step="0.01"
+                              value={serviceData.valorDiaria}
+                              onChange={(e) => setServiceData({...serviceData, valorDiaria: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Valor Total</label>
+                            <div className="p-3 border border-green-200 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50">
+                              <div className="text-lg font-bold text-green-600">R$ {total}</div>
+                              <div className="text-sm text-gray-600">{dias} dia{dias !== 1 ? 's' : ''} de locação</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="grid sm:grid-cols-3 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <DollarSign className="w-4 h-4" />
+                              Caução (R$)
+                            </label>
+                            <input
+                              type="number"
+                              placeholder="500.00"
+                              step="0.01"
+                              value={serviceData.caucao}
+                              onChange={(e) => setServiceData({...serviceData, caucao: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">KM Inicial</label>
+                            <input
+                              type="number"
+                              placeholder="50000"
+                              value={serviceData.kmInicial}
+                              onChange={(e) => setServiceData({...serviceData, kmInicial: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <DollarSign className="w-4 h-4" />
+                              Valor de Mercado (R$)
+                            </label>
+                            <input
+                              type="number"
+                              placeholder="85000.00"
+                              step="0.01"
+                              value={serviceData.valorMercado}
+                              onChange={(e) => setServiceData({...serviceData, valorMercado: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-gray-700">Observações Adicionais</label>
+                          <textarea
+                            placeholder="Informações extras sobre a locação..."
+                            value={serviceData.observacoes}
+                            onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm h-20 resize-none"
+                          />
                       </div>
                     </div>
                   )}
@@ -551,38 +775,67 @@ const ContractGenerator = () => {
                   <button
                     onClick={generateContract}
                     disabled={isGenerating || !clientData.nome}
-                    className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all ${contractType === 'garagem' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
+                    className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all duration-200 transform hover:scale-105 shadow-lg disabled:transform-none disabled:shadow-none flex items-center justify-center gap-3 ${
+                      contractType === 'garagem' 
+                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700' 
+                        : 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700'
+                    } disabled:bg-gray-400 disabled:cursor-not-allowed`}
                   >
-                    {isGenerating ? 'Gerando...' : 'Gerar Contrato'}
+                    {isGenerating ? (
+                      <>
+                        <Loader className="w-5 h-5 animate-spin" />
+                        Gerando Contrato...
+                      </>
+                    ) : (
+                      <>
+                        <FileText className="w-5 h-5" />
+                        Gerar Contrato
+                      </>
+                    )}
                   </button>
                 </div>
 
                 {/* Preview do contrato */}
-                <div className="bg-white border border-gray-200 rounded-lg p-6 print:border-none" id="contract-preview-container">
-                  <div className="bg-gray-50 rounded-lg p-4 overflow-y-auto print:bg-white print:p-0">
+                <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 print:border-none print:bg-white" id="contract-preview-container">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl">
+                      <FileText className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800">Preview do Contrato</h3>
+                      <p className="text-gray-600 text-sm">Visualização em tempo real</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white rounded-xl p-6 border border-gray-100 overflow-y-auto max-h-96 print:bg-white print:p-0 print:border-none print:max-h-none">
                     {generatedContract ? (
                       <div>
                         <img src={logo} alt="Logo" className="w-48 mx-auto mb-4" />
                         {generatedContract}
                       </div>
                     ) : (
-                      <p className="text-gray-500">O contrato gerado aparecerá aqui.</p>
+                      <div className="text-center py-12">
+                        <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <h4 className="text-lg font-semibold text-gray-600 mb-2">Aguardando Geração</h4>
+                        <p className="text-gray-500">Preencha os dados e clique em "Gerar Contrato"</p>
+                      </div>
                     )}
                   </div>
+                  
                   {generatedContract && (
-                    <div className="flex items-center gap-4 mt-4 print:hidden">
+                    <div className="flex flex-col sm:flex-row gap-3 mt-6 print:hidden">
                       <button
                         onClick={() => window.print()}
-                        className="w-full py-2 px-4 rounded-lg font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
+                        className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
                       >
-                        <Download className="w-5 h-5" />
+                        <Printer className="w-5 h-5" />
                         Imprimir / Salvar PDF
                       </button>
                       <button
                         onClick={() => setGeneratedContract(null)}
-                        className="w-full py-2 px-4 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+                        className="flex items-center justify-center gap-2 bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
                       >
-                        <Wrench className="w-5 h-5" />
+                        <Edit className="w-5 h-5" />
                         Editar
                       </button>
                     </div>

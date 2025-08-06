@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
-import { Edit } from 'lucide-react';
+import { Edit, User, Phone, Mail, MapPin, Hash, Save, X, CheckCircle } from 'lucide-react';
 
 const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
   const [clientData, setClientData] = useState(null);
@@ -35,64 +35,114 @@ const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
   if (!clientData) return null;
 
   return (
-    <div className="p-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-6 mb-6">
-        <div className="flex items-center gap-3 mb-6">
-          <Edit className="w-8 h-8 text-blue-600" />
-          <h2 className="text-2xl font-bold text-gray-800">Editar Cliente</h2>
-        </div>
-        <form onSubmit={handleUpdateClient}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="nome"
-              placeholder="Nome"
-              value={clientData.nome}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="text"
-              name="cpf"
-              placeholder="CPF / CNPJ"
-              value={clientData.cpf}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="text"
-              name="telefone"
-              placeholder="Telefone"
-              value={clientData.telefone}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={clientData.email}
-              onChange={handleInputChange}
-              className="p-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mt-4">
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Salvar Alterações
-            </button>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl">
+                <Edit className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold text-gray-800">Editar Cliente</h2>
+                <p className="text-gray-600">Atualize as informações do cliente</p>
+              </div>
+            </div>
             <button
-              type="button"
               onClick={() => setEditingClient(null)}
-              className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              className="p-3 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
             >
-              Cancelar
+              <X className="w-6 h-6 text-gray-600" />
             </button>
           </div>
-        </form>
+          <form onSubmit={handleUpdateClient} className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Nome Completo
+                </label>
+                <input
+                  type="text"
+                  name="nome"
+                  placeholder="Digite o nome completo"
+                  value={clientData.nome}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Hash className="w-4 h-4" />
+                  CPF / CNPJ
+                </label>
+                <input
+                  type="text"
+                  name="cpf"
+                  placeholder="000.000.000-00 ou 00.000.000/0000-00"
+                  value={clientData.cpf}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Phone className="w-4 h-4" />
+                  Telefone
+                </label>
+                <input
+                  type="text"
+                  name="telefone"
+                  placeholder="(11) 99999-9999"
+                  value={clientData.telefone}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="cliente@email.com"
+                  value={clientData.email}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+              <button 
+                type="submit" 
+                className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+              >
+                <Save className="w-5 h-5" />
+                Salvar Alterações
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditingClient(null)}
+                className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+              >
+                <X className="w-5 h-5" />
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
       </div>
     </div>
   );
