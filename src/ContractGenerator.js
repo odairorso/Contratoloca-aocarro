@@ -250,17 +250,17 @@ const ContractGenerator = () => {
           <p>LOCATÁRIO: ${clientData.nome}</p>
         </div>
         <br/><br/>
-        <div style="text-align: center;">
+        <div>
           <p>TESTEMUNHAS:</p>
           <br/>
-          <div className="flex flex-wrap justify-around text-left">
+          <div className="flex flex-wrap justify-start text-left">
             <div className="w-full sm:w-2/5">
-              <p>1. <span className="inline-block w-full border-b border-black"></span></p>
+              <p>1. <span className="block min-w-full border-b border-black"></span></p>
               <p>Nome:</p>
               <p>CPF:</p>
             </div>
             <div className="w-full sm:w-2/5">
-              <p>2. <span className="inline-block w-full border-b border-black"></span></p>
+              <p>2. <span className="block min-w-full border-b border-black"></span></p>
               <p>Nome:</p>
               <p>CPF:</p>
             </div>
