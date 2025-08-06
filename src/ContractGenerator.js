@@ -256,22 +256,6 @@ const ContractGenerator = () => {
           <p>LOCATÁRIO: ${clientData.nome}</p>
         </div>
         <br/><br/>
-        <div>
-          <p>TESTEMUNHAS:</p>
-          <br/>
-          <div className="flex flex-wrap justify-start text-left">
-            <div className="w-full sm:w-2/5">
-              <p className="flex items-baseline">1. <span className="flex-grow border-b border-black ml-2"></span></p>
-              <p>Nome:</p>
-              <p>CPF:</p>
-            </div>
-            <div className="w-full sm:w-2/5">
-              <p className="flex items-baseline">2. <span className="flex-grow border-b border-black ml-2"></span></p>
-              <p>Nome:</p>
-              <p>CPF:</p>
-            </div>
-          </div>
-        </div>
       </div>
     `;
     return <div dangerouslySetInnerHTML={{ __html: contractHTML }} />;
@@ -522,12 +506,15 @@ const ContractGenerator = () => {
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <input
-                          type="text"
-                          placeholder="Valor da Diária (R$)"
-                          value={serviceData.valorDiaria}
-                          onChange={(e) => setServiceData({...serviceData, valorDiaria: e.target.value})}
-                          className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        />
+              type="text"
+              name="color"
+              placeholder="Cor"
+              value={newCar.color}
+              onChange={handleInputChange}
+              className="p-2 border rounded"
+              required
+            />
+          </div>
                         <div className="p-3 border border-gray-300 rounded-lg bg-gray-100">
                           <span className="text-sm text-gray-500">Total: R$ {total} ({dias} dias)</span>
                         </div>
