@@ -198,64 +198,77 @@ const ContractGenerator = () => {
         <p><strong>§ 3º.</strong> A LOCADORA poderá preencher os dados relativos à "apresentação do Condutor", previsto na Resolução 404/12 do CONTRAN, caso tenha sido lavrada autuação por infrações de trânsito enquanto o veículo esteve em posse e responsabilidade do LOCATÁRIO, situação na qual a LOCADORA apresentará para o Órgão de Trânsito competente a cópia do presente contrato celebrado com o LOCATÁRIO.</p>
         <p><strong>§ 4º.</strong> Descabe qualquer discussão sobre a procedência ou improcedência das infrações de trânsito aplicadas, e poderá o LOCATÁRIO, a seu critério e às suas expensas, recorrer das multas, junto ao Órgão de Trânsito competente, o que não o eximirá do pagamento do valor da multa, mas lhe dará o direito ao reembolso, caso o recurso seja julgado procedente.</p>
         <br/>
-        <p><strong>CLÁUSULA 9ª – DA VEDAÇÃO À SUBLOCAÇÃO E EMPRÉSTIMO DO VEÍCULO</strong></p>
-        <p>Será permitido o uso do veículo objeto do presente contrato, apenas do LOCATÁRIO, sendo vedada, no todo ou em parte, a sublocação, transferência, empréstimo, comodato ou cessão da locação, seja a qualquer título, sem expressa anuência da LOCADORA, sob pena de imediata rescisão, aplicação de multa e de demais penalidades contratuais e legais cabíveis.</p>
-        <p><strong>Parágrafo único.</strong> Ocorrendo a utilização do veículo por terceiros com a concordância do LOCATÁRIO, este se responsabilizará por qualquer ação civil ou criminal que referida utilização possa gerar, isentando assim a LOCADORA de qualquer responsabilidade, ou ônus.</p>
-        <br/>
-        <p><strong>CLÁUSULA 10ª – DA MANUTENÇÃO</strong></p>
-        <p>A manutenção do veículo, referente a troca das peças oriundas do desgaste natural de sua utilização, é de responsabilidade do LOCATÁRIO, sem ônus para a LOCADORA.</p>
-        <p><strong>Parágrafo único.</strong> Se durante o período da manutenção o LOCATÁRIO não dispor do bem, ou de outro de categoria igual ou similar, terá desconto no aluguel, proporcional ao período de manutenção.</p>
-        <br/>
-        <p><strong>CLÁUSULA 11ª – DA UTILIZAÇÃO DO SEGURO</strong></p>
-        <p>Ocorrendo a necessidade da utilização do seguro veicular, registrado em nome da LOCADORA, devido à perda, extravio, furto, roubo, destruição parcial ou total, ou colisão do veículo por ora locado, fica desde já estipulada indenização devida pelo LOCATÁRIO que deverá, para efeito de cobertura do valor da franquia do seguro veicular, pagar à LOCADORA o valor de R$ 3.520,00 (três mil e quinhentos e vinte reais).</p>
-        <br/>
-        <p><strong>CLÁUSULA 12ª – DOS DEVERES DO LOCATÁRIO</strong></p>
-        <p>Sem prejuízo de outras disposições deste contrato, constituem obrigações do LOCATÁRIO:</p>
-        <p>I – Pagar o aluguel e os encargos da locação, legal ou contratualmente exigíveis, no prazo estipulado;</p>
-        <p>II – Usar o veículo como foi convencionado, de acordo com a sua natureza e com o objetivo a que se destina;</p>
-        <p>III – cuidar e zelar do veículo como se fosse sua propriedade;</p>
+        <p><strong>CLÁUSULA 9ª – DAS OBRIGAÇÕES DO LOCATÁRIO</strong></p>
+        <p>Constituem obrigações do LOCATÁRIO:</p>
+        <p>I – Pagar pontualmente o aluguel;</p>
+        <p>II – Servir-se do veículo para o uso convencionado ou presumido, compatível com a natureza deste e com as circunstâncias;</p>
+        <p>III – Zelar pelo veículo como se fosse seu;</p>
         <p>IV – Restituir o veículo, no final da locação, no estado em que o recebeu, conforme o laudo de vistoria, salvo as deteriorações decorrentes do seu uso normal;</p>
         <p>V – Levar imediatamente ao conhecimento da LOCADORA o surgimento de qualquer dano, ou ocorrência, cuja reparação, e ou indenização, a esta enquadre;</p>
         <p>VI – Reparar rapidamente os danos sob sua responsabilidade;</p>
         <p>VII – não modificar a forma interna ou externa do veículo sem o consentimento prévio e por escrito da LOCADORA.</p>
         <br/>
-        <p><strong>CLÁUSULA 13ª – DOS DEVERES DA LOCADORA</strong></p>
-        <p>Sem prejuízo de outras disposições deste contrato, constituem obrigações da LOCADORA:</p>
-        <p>I – Entregar ao LOCATÁRIO o veículo alugado em estado de servir ao uso a que se destina;</p>
-        <p>II – Ser integralmente responsável pelos problemas, defeitos e vícios anteriores à locação.</p>
+        <p><strong>CLÁUSULA 10ª – DAS OBRIGAÇÕES DA LOCADORA</strong></p>
+        <p>Constituem obrigações da LOCADORA:</p>
+        <p>I – Entregar ao LOCATÁRIO o veículo em estado de servir ao uso a que se destina;</p>
+        <p>II – Manter o LOCATÁRIO no uso pacífico do veículo durante o tempo do contrato;</p>
+        <p>III – Responder pelos vícios ou defeitos anteriores à locação.</p>
         <br/>
-        <p><strong>CLÁUSULA 14ª – DA GARANTIA</strong></p>
-        <p>O cumprimento das obrigações previstas neste contrato, inclusive o pagamento pontual do aluguel, estará garantido por caução dada em dinheiro, perfazendo o montante de R$ ${serviceData.caucao} (), entregue à LOCADORA no ato de assinatura deste contrato.</p>
-        <p><strong>§ 1º.</strong> Ao final da locação, tendo sido todas as obrigações devidamente cumpridas, o LOCATÁRIO estará autorizado a levantar a respectiva soma.</p>
-        <p><strong>§ 2º.</strong> A critério das partes, o valor dado como caução poderá ser revertido para o pagamento de aluguéis devidos.</p>
+        <p><strong>CLÁUSULA 11ª – DA CAUÇÃO</strong></p>
+        <p>Para garantir o cumprimento das obrigações assumidas neste contrato, o LOCATÁRIO oferece em caução a quantia de R$ ${serviceData.caucao}, que será devolvida ao final do contrato, desde que cumpridas todas as obrigações contratuais.</p>
+        <p><strong>Parágrafo único.</strong> A caução poderá ser utilizada pela LOCADORA para cobrir eventuais danos ao veículo, multas de trânsito, ou qualquer outro débito decorrente do uso do veículo durante o período de locação.</p>
         <br/>
-        <p><strong>CLÁUSULA 15ª – DA RESCISÃO</strong></p>
-        <p>As partes poderão rescindir o contrato unilateralmente, sem apresentação de justificativa.</p>
-        <p><strong>Parágrafo único.</strong> Em cumprimento ao princípio da boa-fé, as partes se comprometem a informar uma à outra qualquer fato que possa porventura intervir na relação jurídica formalizada através do presente contrato.</p>
+        <p><strong>CLÁUSULA 12ª – DA RESCISÃO</strong></p>
+        <p>O presente contrato poderá ser rescindido:</p>
+        <p>I – Por acordo entre as partes;</p>
+        <p>II – Por inadimplemento de qualquer das cláusulas contratuais;</p>
+        <p>III – Por necessidade de reparos no veículo que impeçam seu uso por mais de 15 (quinze) dias;</p>
+        <p>IV – Por sinistro que resulte em perda total do veículo.</p>
         <br/>
-        <p><strong>CLÁUSULA 16ª – DAS PENALIDADES</strong></p>
-        <p>A parte que violar as obrigações previstas neste contrato se sujeitará ao pagamento de indenização e ressarcimento pelas perdas, danos, lucros cessantes, danos indiretos e quaisquer outros prejuízos patrimoniais ou morais percebidos pela outra parte em decorrência deste descumprimento, sem prejuízo de demais penalidades legais ou contratuais cabíveis.</p>
-        <p><strong>§ 1º.</strong> Caso ocorra uma violação, este contrato poderá ser rescindido de pleno direito pela parte prejudicada, sem a necessidade aviso prévio.</p>
-        <p><strong>§ 2º.</strong> Ocorrendo uma tolerância de uma das partes em relação ao descumprimento das cláusulas contidas neste instrumento não se configura em renúncia ou alteração da norma infringida.</p>
+        <p><strong>CLÁUSULA 13ª – DO FORO</strong></p>
+        <p>As partes elegem o foro da comarca de Campo Grande/MS para dirimir quaisquer questões oriundas do presente contrato, renunciando a qualquer outro, por mais privilegiado que seja.</p>
         <br/>
-        <p><strong>CLÁUSULA 17ª – DO FORO</strong></p>
-        <p>Fica desde já eleito o foro da comarca de Naviraí para serem resolvidas eventuais pendências decorrentes deste contrato.</p>
-        <br/><br/>
-        <p style="text-align: center;">Naviraí, ${day} de ${month} de ${year}.</p>
-        <br/><br/>
-        <div style="text-align: center;">
-          <p>______________________________________________________</p>
-          <p>LOCADORA: João Roberto dos Santos de Oliveira</p>
-          <p>neste ato representando a pessoa jurídica Or dos Santos de Oliveira</p>
+        <p>E, por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor e forma, juntamente com 2 (duas) testemunhas.</p>
+        <br/>
+        <p>Campo Grande/MS, ${day} de ${month} de ${year}.</p>
+        <br/>
+        <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+          <div style="text-align: center; width: 45%;">
+            <div style="border-top: 1px solid black; padding-top: 5px;">
+              <strong>LOCADORA</strong><br/>
+              OR DOS SANTOS DE OLIVEIRA LTDA<br/>
+              CNPJ: 17.909.442/0001-58
+            </div>
+          </div>
+          <div style="text-align: center; width: 45%;">
+            <div style="border-top: 1px solid black; padding-top: 5px;">
+              <strong>LOCATÁRIO</strong><br/>
+              ${clientData.nome}<br/>
+              CPF: ${clientData.cpf}
+            </div>
+          </div>
         </div>
-        <br/><br/>
-        <div style="text-align: center;">
-          <p>_____________________________________________________</p>
-          <p>LOCATÁRIO: ${clientData.nome}</p>
+        <br/>
+        <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+          <div style="text-align: center; width: 45%;">
+            <div style="border-top: 1px solid black; padding-top: 5px;">
+              <strong>TESTEMUNHA 1</strong><br/>
+              Nome: _________________________<br/>
+              CPF: __________________________
+            </div>
+          </div>
+          <div style="text-align: center; width: 45%;">
+            <div style="border-top: 1px solid black; padding-top: 5px;">
+              <strong>TESTEMUNHA 2</strong><br/>
+              Nome: _________________________<br/>
+              CPF: __________________________
+            </div>
+          </div>
         </div>
-        <br/><br/>
+        ${serviceData.observacoes ? `<br/><p><strong>OBSERVAÇÕES ADICIONAIS:</strong></p><p>${serviceData.observacoes}</p>` : ''}
       </div>
     `;
+
     return <div dangerouslySetInnerHTML={{ __html: contractHTML }} />;
   };
 
@@ -547,9 +560,9 @@ const ContractGenerator = () => {
                         </div>
                         
                         <div className="space-y-2">
-                          <label className="text-sm font-medium text-gray-700">Observações</label>
+                          <label className="text-sm font-medium text-gray-700">Observações Adicionais</label>
                           <textarea
-                            placeholder="Informações adicionais sobre o serviço..."
+                            placeholder="Informações extras sobre o serviço..."
                             value={serviceData.observacoes}
                             onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
                             className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm h-20 resize-none"
@@ -566,62 +579,59 @@ const ContractGenerator = () => {
                           <Car className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-gray-800">Dados da Locação</h3>
-                          <p className="text-gray-600 text-sm">Informações do veículo e período</p>
+                          <h3 className="text-xl font-bold text-gray-800">Dados do Veículo</h3>
+                          <p className="text-gray-600 text-sm">Informações sobre o veículo a ser locado</p>
                         </div>
                       </div>
                       <div className="space-y-4">
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Car className="w-4 h-4" />
-                            Selecionar Veículo
-                          </label>
+                        <div className="relative">
+                          <Car className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                           <select
-                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
                             onChange={(e) => {
                               const selected = cars.find(car => car.plate === e.target.value);
                               if (selected) {
                                 setServiceData({
                                   ...serviceData,
-                                  modelo: `${selected.brand} ${selected.model}`,
-                                  anoFabricacao: selected.year || '',
-                                  placa: selected.plate || '',
-                                  renavam: selected.renavam || '',
-                                  valorDiaria: selected.price || '',
-                                  cor: selected.color || '',
-                                  valorMercado: selected.value || ''
+                                  placa: selected.plate,
+                                  modelo: selected.model,
+                                  anoFabricacao: selected.year,
+                                  cor: selected.color,
+                                  renavam: selected.renavam,
+                                  valorMercado: selected.market_value
                                 });
                               }
                             }}
                             value={serviceData.placa || ''}
                           >
-                            <option value="">{loadingCars ? 'Carregando veículos...' : 'Selecione um veículo'}</option>
+                            <option value="">{loadingCars ? 'Carregando veículos...' : 'Selecione um veículo cadastrado'}</option>
                             {cars.map((car, index) => (
                               <option key={index} value={car.plate}>
-                                {car.brand} {car.model} ({car.plate}) - R$ {parseFloat(car.price || 0).toFixed(2)}/dia
+                                {car.model} {car.year} - {car.plate}
                               </option>
                             ))}
                           </select>
                         </div>
+                        
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Modelo do Veículo</label>
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                              <Car className="w-4 h-4" />
+                              Modelo
+                            </label>
                             <input
                               type="text"
-                              placeholder="Ex: Toyota Corolla"
+                              placeholder="Ex: Honda Civic"
                               value={serviceData.modelo}
                               onChange={(e) => setServiceData({...serviceData, modelo: e.target.value})}
                               className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
                             />
                           </div>
                           <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                              <Calendar className="w-4 h-4" />
-                              Ano de Fabricação
-                            </label>
+                            <label className="text-sm font-medium text-gray-700">Ano de Fabricação</label>
                             <input
-                              type="text"
-                              placeholder="2023"
+                              type="number"
+                              placeholder="2020"
                               value={serviceData.anoFabricacao}
                               onChange={(e) => setServiceData({...serviceData, anoFabricacao: e.target.value})}
                               className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
@@ -629,7 +639,17 @@ const ContractGenerator = () => {
                           </div>
                         </div>
                         
-                        <div className="grid sm:grid-cols-3 gap-4">
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Placa</label>
+                            <input
+                              type="text"
+                              placeholder="ABC-1234"
+                              value={serviceData.placa}
+                              onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
+                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
+                            />
+                          </div>
                           <div className="space-y-2">
                             <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                               <Palette className="w-4 h-4" />
@@ -640,16 +660,6 @@ const ContractGenerator = () => {
                               placeholder="Branco"
                               value={serviceData.cor}
                               onChange={(e) => setServiceData({...serviceData, cor: e.target.value})}
-                              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Placa</label>
-                            <input
-                              type="text"
-                              placeholder="ABC-1234"
-                              value={serviceData.placa}
-                              onChange={(e) => setServiceData({...serviceData, placa: e.target.value})}
                               className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
                             />
                           </div>
@@ -840,13 +850,3 @@ const ContractGenerator = () => {
                     </div>
                   )}
                 </div>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default ContractGenerator;
