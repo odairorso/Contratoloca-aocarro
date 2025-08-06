@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Car, FileText, Send, Download, Wrench, User, Calendar, DollarSign, MapPin, Phone, Mail, Hash, Palette, Clock, Loader, CheckCircle, AlertCircle, Printer, Edit } from 'lucide-react';
 import { supabase } from './supabaseClient';
-import logo from './logo.jpg';
+import Logo from './Logo';
 
 const ContractGenerator = () => {
   const [contractType, setContractType] = useState('');
@@ -53,8 +53,7 @@ const ContractGenerator = () => {
         const clientExists = acc.find(item => item.client_data.cpf === current.client_data.cpf);
         if (!clientExists) {
           acc.push(current);
-        }
-        return acc;
+        n        return acc;
       }, []);
       setClients(uniqueClients);
     }
@@ -153,7 +152,7 @@ const ContractGenerator = () => {
         <p><strong>CLÁUSULA 1ª – DO OBJETO</strong></p>
         <p>Por meio deste contrato, que firmam entre si a LOCADORA e o LOCATÁRIO, regula-se a locação do veículo:<br/>
         ${serviceData.modelo} ano ${serviceData.anoFabricacao}<br/>
-        Com placa ${serviceData.placa}, RENAVAM ${serviceData.renavam}, e com o valor de mercado aproximado em R$ 55.000,00</p>
+        Com placa ${serviceData.placa}, RENAVAM ${serviceData.renavam}, e com o valor de mercado aproximado em R$ ${serviceData.valorMercado}</p>
         <p><strong>Parágrafo único.</strong> O presente contrato é acompanhado de um laudo de vistoria, que descreve o veículo e o seu estado de conservação no momento em que o mesmo foi entregue ao LOCATÁRIO.</p>
         <br/>
         <p><strong>CLÁUSULA 2ª – DO VALOR DO ALUGUEL</strong></p>
@@ -584,12 +583,12 @@ const ContractGenerator = () => {
                                 setServiceData({
                                   ...serviceData,
                                   modelo: `${selected.brand} ${selected.model}`,
-                                  anoFabricacao: selected.year,
-                                  placa: selected.plate,
-                                  renavam: selected.renavam,
-                                  valorDiaria: selected.price,
-                                  cor: selected.color,
-                                  valorMercado: selected.value
+                                  anoFabricacao: selected.year || '',
+                                  placa: selected.plate || '',
+                                  renavam: selected.renavam || '',
+                                  valorDiaria: selected.price || '',
+                                  cor: selected.color || '',
+                                  valorMercado: selected.value || ''
                                 });
                               }
                             }}
@@ -768,7 +767,7 @@ const ContractGenerator = () => {
                             onChange={(e) => setServiceData({...serviceData, observacoes: e.target.value})}
                             className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm h-20 resize-none"
                           />
-                      </div>
+                        </div>
                     </div>
                   )}
 
@@ -794,8 +793,9 @@ const ContractGenerator = () => {
                     )}
                   </button>
                 </div>
+              </div>
 
-                {/* Preview do contrato */}
+              {/* Preview do contrato */}
                 <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 print:border-none print:bg-white" id="contract-preview-container">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl">
@@ -810,7 +810,7 @@ const ContractGenerator = () => {
                   <div className="bg-white rounded-xl p-6 border border-gray-100 overflow-y-auto max-h-96 print:bg-white print:p-0 print:border-none print:max-h-none">
                     {generatedContract ? (
                       <div>
-                        <img src={logo} alt="Logo" className="w-48 mx-auto mb-4" />
+                        <Logo showFullLogo={true} className="w-48 mx-auto mb-4" />
                         {generatedContract}
                       </div>
                     ) : (
