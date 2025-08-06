@@ -12,8 +12,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
     year: '',
     plate: '',
     price: '',
-    color: '',
-    value: '',
     renavam: ''
   });
   const [editingCarData, setEditingCarData] = useState(null);
@@ -64,7 +62,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
       alert('Erro ao adicionar carro: ' + error.message);
     } else {
       alert('Carro adicionado com sucesso!');
-      setNewCar({ brand: '', model: '', year: '', plate: '', price: '', color: '', value: '', renavam: '' });
+      setNewCar({ brand: '', model: '', year: '', plate: '', price: '', renavam: '' });
       fetchCars();
     }
   };
@@ -163,24 +161,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                 className="p-2 border rounded"
                 required
               />
-              <input
-                type="text"
-                name="color"
-                placeholder="Cor"
-                value={editingCarData.color}
-                onChange={handleEditInputChange}
-                className="p-2 border rounded"
-                required
-              />
-              <input
-                type="number"
-                name="value"
-                placeholder="Valor do Veículo"
-                value={editingCarData.value}
-                onChange={handleEditInputChange}
-                className="p-2 border rounded"
-                required
-              />
             </div>
             <div className="mt-4">
               <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -258,24 +238,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                 className="p-2 border rounded"
                 required
               />
-              <input
-                type="text"
-                name="color"
-                placeholder="Cor"
-                value={newCar.color}
-                onChange={handleInputChange}
-                className="p-2 border rounded"
-                required
-              />
-              <input
-                type="number"
-                name="value"
-                placeholder="Valor do Veículo"
-                value={newCar.value}
-                onChange={handleInputChange}
-                className="p-2 border rounded"
-                required
-              />
             </div>
             <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Adicionar Carro
@@ -311,8 +273,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Placa</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">RENAVAM</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Diária (R$)</th>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Cor</th>
-                  <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Valor</th>
                   <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ações</th>
                 </tr>
               </thead>
@@ -325,8 +285,6 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                     <td className="py-4 px-4 whitespace-nowrap">{car.plate}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.renavam}</td>
                     <td className="py-4 px-4 whitespace-nowrap">{car.price}</td>
-                    <td className="py-4 px-4 whitespace-nowrap">{car.color}</td>
-                    <td className="py-4 px-4 whitespace-nowrap">{car.value}</td>
                     <td className="py-4 px-4 whitespace-nowrap">
                       <button
                         onClick={() => onEditCar(car)}
