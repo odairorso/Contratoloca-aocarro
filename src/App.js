@@ -7,12 +7,6 @@ import './App.css';
 
 function App() {
   const [page, setPage] = useState('generator');
-  const [selectedClient, setSelectedClient] = useState(null);
-
-  const handleSelectClient = (client) => {
-    setSelectedClient(client);
-    setPage('generator');
-  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -45,8 +39,8 @@ function App() {
         </div>
       </header>
       <main>
-        {page === 'generator' && <ContractGenerator selectedClient={selectedClient} />}
-        {page === 'clients' && <ClientList onSelectClient={handleSelectClient} />}
+        {page === 'generator' && <ContractGenerator />}
+        {page === 'clients' && <ClientList />}
         {page === 'cars' && <CarManagement />}
       </main>
     </div>

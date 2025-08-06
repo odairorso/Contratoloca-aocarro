@@ -3,12 +3,7 @@ import { Car, FileText, Send, Download, Wrench } from 'lucide-react';
 import { supabase } from './supabaseClient';
 import logo from './logo.jpg';
 
-const ContractGenerator = ({ selectedClient }) => {
-  useEffect(() => {
-    if (selectedClient) {
-      setClientData(selectedClient);
-    }
-  }, [selectedClient]);
+const ContractGenerator = () => {
   const [contractType, setContractType] = useState('');
   const [clientData, setClientData] = useState({
     nome: '',
@@ -37,6 +32,53 @@ const ContractGenerator = ({ selectedClient }) => {
     observacoes: '',
     valorMercado: ''
   });
+
+  // New states for clients and cars
+  const [clients, setClients] = useState([]);
+  const [cars, setCars] = useState([]);
+  const [loadingClients, setLoadingClients] = useState(true);
+  const [loadingCars, setLoadingCars] = useState(true);
+
+  // Fetch clients from Supabase
+  const fetchClients = async () => {
+    setLoadingClients(true);
+    const { data, error } = await supabase
+      .from('contracts')
+      .select('id, client_data');
+
+    if (error) {
+      console.error('Erro ao buscar clientes:', error);
+    } else {
+      const uniqueClients = data.reduce((acc, current) => {
+        const clientExists = acc.find(item => item.client_data.cpf === current.client_data.cpf);
+        if (!clientExists) {
+          acc.push(current);
+        }
+        return acc;
+      }, []);
+      setClients(uniqueClients);
+    }
+    setLoadingClients(false);
+  };
+
+  // Fetch cars from Supabase
+  const fetchCars = async () => {
+    setLoadingCars(true);
+    const { data, error } = await supabase.from('cars').select('*');
+
+    if (error) {
+      console.error('Erro ao buscar carros:', error);
+    } else {
+      setCars(data);
+    }
+    setLoadingCars(false);
+  };
+
+  // useEffect to fetch data on component mount
+  useEffect(() => {
+    fetchClients();
+    fetchCars();
+  }, []);
 
   const calcularValorTotal = () => {
     if (serviceData.dataInicio && serviceData.dataFim && serviceData.valorDiaria) {
@@ -262,6 +304,21 @@ const ContractGenerator = ({ selectedClient }) => {
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados do Cliente</h3>
                   <div className="space-y-4">
+                    <select
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      onChange={(e) => {
+                        const selected = clients.find(c => c.client_data.cpf === e.target.value);
+                        if (selected) setClientData(selected.client_data);
+                      }}
+                      value={clientData.cpf || ''}
+                    >
+                      <option value="">{loadingClients ? 'Carregando clientes...' : 'Selecione um cliente'}</option>
+                      {clients.map((client, index) => (
+                        <option key={index} value={client.client_data.cpf}>
+                          {client.client_data.nome} ({client.client_data.cpf})
+                        </option>
+                      ))}
+                    </select>
                     <input
                       type="text"
                       placeholder="Nome completo"
@@ -377,6 +434,30 @@ const ContractGenerator = ({ selectedClient }) => {
                   <div className="bg-green-50 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold mb-4 text-gray-800">Dados da Locação</h3>
                     <div className="space-y-4">
+                      <select
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        onChange={(e) => {
+                          const selected = cars.find(car => car.plate === e.target.value);
+                          if (selected) {
+                            setServiceData({
+                              ...serviceData,
+                              modelo: selected.model,
+                              anoFabricacao: selected.year,
+                              placa: selected.plate,
+                              valorDiaria: selected.price,
+                              // Adicione outros campos do carro que você queira preencher automaticamente
+                            });
+                          }
+                        }}
+                        value={serviceData.placa || ''}
+                      >
+                        <option value="">{loadingCars ? 'Carregando carros...' : 'Selecione um carro'}</option>
+                        {cars.map((car, index) => (
+                          <option key={index} value={car.plate}>
+                            {car.brand} {car.model} ({car.plate})
+                          </option>
+                        ))}
+                      </select>
                       <div className="grid grid-cols-2 gap-4">
                         <input
                           type="text"
