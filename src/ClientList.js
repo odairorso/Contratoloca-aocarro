@@ -11,7 +11,7 @@ const ClientList = ({ onSelectClient, onEditClient, onAddClient }) => {
   const fetchClients = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from('clients')
+      .from('clientes')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -39,7 +39,7 @@ const ClientList = ({ onSelectClient, onEditClient, onAddClient }) => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir este cliente? Esta ação não pode ser desfeita.')) {
-      const { error } = await supabase.from('clients').delete().eq('id', id);
+      const { error } = await supabase.from('clientes').delete().eq('id', id);
       if (error) {
         alert('Erro ao excluir cliente: ' + error.message);
       } else {

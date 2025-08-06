@@ -28,7 +28,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
 
   const fetchCars = async () => {
     setLoading(true);
-    let query = supabase.from('cars').select('*');
+    let query = supabase.from('veiculos').select('*');
 
     if (searchTerm) {
       query = query.or(`brand.ilike.%${searchTerm}%,model.ilike.%${searchTerm}%`);
@@ -59,7 +59,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
 
   const handleAddCar = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase.from('cars').insert([newCar]);
+    const { data, error } = await supabase.from('veiculos').insert([newCar]);
     if (error) {
       alert('Erro ao adicionar carro: ' + error.message);
     } else {
@@ -71,7 +71,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
 
   const handleDeleteCar = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir este carro?')) {
-      const { error } = await supabase.from('cars').delete().eq('id', id);
+      const { error } = await supabase.from('veiculos').delete().eq('id', id);
       if (error) {
         alert('Erro ao excluir carro: ' + error.message);
       } else {
@@ -83,7 +83,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
 
   const handleUpdateCar = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase.from('cars').update(editingCarData).eq('id', editingCarData.id);
+    const { data, error } = await supabase.from('veiculos').update(editingCarData).eq('id', editingCarData.id);
     if (error) {
       alert('Erro ao atualizar carro: ' + error.message);
     } else {

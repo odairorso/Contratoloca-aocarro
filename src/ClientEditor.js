@@ -6,8 +6,18 @@ const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
   const [clientData, setClientData] = useState(null);
 
   useEffect(() => {
-    if (editingClient) {
-      setClientData(editingClient.client_data);
+    if (editingClient && editingClient.id) {
+      setClientData(editingClient);
+    } else {
+      setClientData({
+        nome: '',
+        cpf: '',
+        rg: '',
+        endereco: '',
+        bairro: '',
+        telefone: '',
+        email: ''
+      });
     }
   }, [editingClient]);
 
@@ -18,17 +28,28 @@ const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
 
   const handleUpdateClient = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase
-      .from('contracts')
-      .update({ client_data: clientData })
-      .eq('id', editingClient.id);
+    let error;
+    if (editingClient && editingClient.id) {
+      // Update existing client
+      const { error: updateError } = await supabase
+        .from('clientes')
+        .update(clientData)
+        .eq('id', editingClient.id);
+      error = updateError;
+    } else {
+      // Insert new client
+      const { error: insertError } = await supabase
+        .from('clientes')
+        .insert([clientData]);
+      error = insertError;
+    }
 
     if (error) {
-      alert('Erro ao atualizar cliente: ' + error.message);
+      alert('Erro ao salvar cliente: ' + error.message);
     } else {
-      alert('Cliente atualizado com sucesso!');
+      alert('Cliente salvo com sucesso!');
       setEditingClient(null);
-      fetchClients();
+      if (fetchClients) fetchClients();
     }
   };
 

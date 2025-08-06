@@ -56,33 +56,18 @@ const ContractGenerator = () => {
   const fetchClients = async () => {
     setLoadingClients(true);
     try {
-      console.log('🔍 Buscando clientes cadastrados...');
-      
-      // Tenta buscar clientes da tabela 'clientes'
-      const { data: clientsData, error } = await supabase
+      const { data, error } = await supabase
         .from('clientes')
         .select('*');
       
       if (error) {
-        console.log('❌ Erro ao buscar clientes:', error);
+        console.error('Erro ao buscar clientes:', error);
         setClients([]);
       } else {
-        console.log('✅ Clientes encontrados:', clientsData?.length || 0);
-        console.log('📄 Dados completos dos clientes:', clientsData);
-        
-        if (clientsData && clientsData.length > 0) {
-          console.log('🎯 CLIENTES CARREGADOS COM SUCESSO!');
-          console.log('📋 Lista de nomes:', clientsData.map(c => c.nome));
-          // Mapear corretamente para o formato esperado pelo dropdown
-          setClients(clientsData.map(client => ({ client_data: client })));
-        } else {
-          console.log('⚠️ NENHUM CLIENTE ENCONTRADO - Array vazio');
-          setClients([]);
-        }
+        setClients(data || []);
       }
-      
     } catch (error) {
-      console.error('❌ Erro ao conectar:', error);
+      console.error('Erro ao conectar:', error);
       setClients([]);
     } finally {
       setLoadingClients(false);
@@ -92,33 +77,18 @@ const ContractGenerator = () => {
   const fetchCars = async () => {
     setLoadingCars(true);
     try {
-      console.log('🚗 Buscando veículos cadastrados...');
-      
-      // Tenta buscar veículos da tabela 'veiculos'
-      const { data: carsData, error } = await supabase
+      const { data, error } = await supabase
         .from('veiculos')
         .select('*');
       
       if (error) {
-        console.log('❌ Erro ao buscar veículos:', error);
+        console.error('Erro ao buscar veículos:', error);
         setCars([]);
       } else {
-        console.log('✅ Veículos encontrados:', carsData?.length || 0);
-        console.log('📄 Dados completos dos veículos:', carsData);
-        
-        if (carsData && carsData.length > 0) {
-          console.log('🎯 VEÍCULOS CARREGADOS COM SUCESSO!');
-          console.log('🚗 Lista de veículos:', carsData.map(c => c.veiculo + ' ' + c.modelo));
-          // Mapear corretamente para o formato esperado pelo dropdown
-          setCars(carsData.map(car => ({ car_data: car })));
-        } else {
-          console.log('⚠️ NENHUM VEÍCULO ENCONTRADO - Array vazio');
-          setCars([]);
-        }
+        setCars(data || []);
       }
-      
     } catch (error) {
-      console.error('❌ Erro ao conectar:', error);
+      console.error('Erro ao conectar:', error);
       setCars([]);
     } finally {
       setLoadingCars(false);
@@ -670,25 +640,20 @@ const ContractGenerator = () => {
                           <select
                             className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
                             onChange={(e) => {
-                              const selected = cars.find(c => c.car_data.placa === e.target.value);
+                              const selected = cars.find(car => car.placa === e.target.value);
                               if (selected) {
                                 setServiceData({
                                   ...serviceData,
-                                  veiculo: selected.car_data.veiculo,
-                                  placa: selected.car_data.placa,
-                                  modelo: selected.car_data.modelo,
-                                  anoFabricacao: selected.car_data.anoFabricacao,
-                                  cor: selected.car_data.cor,
-                                  renavam: selected.car_data.renavam
+                                  ...selected
                                 });
                               }
                             }}
                             value={serviceData.placa || ''}
                           >
                             <option value="">{loadingCars ? 'Carregando veículos...' : 'Selecione um veículo existente'}</option>
-                            {cars.map((car, index) => (
-                              <option key={index} value={car.car_data?.placa || ''}>
-                                {car.car_data?.veiculo || 'Veículo'} - {car.car_data?.placa || 'Placa'}
+                            {cars.map((car) => (
+                              <option key={car.id} value={car.placa}>
+                                {car.veiculo} {car.modelo} ({car.placa})
                               </option>
                             ))}
                           </select>
