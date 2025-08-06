@@ -240,25 +240,26 @@ const ContractGenerator = () => {
         <p style="text-align: center;">Naviraí, ${day} de ${month} de ${year}.</p>
         <br/><br/>
         <div style="text-align: center;">
-          <p style="border-bottom: 1px solid #000; display: inline-block; padding-bottom: 2px;">LOCADORA</p>
-          <p>OR DOS SANTOS DE OLIVEIRA LTDA</p>
+          <p>______________________________________________________</p>
+          <p>LOCADORA: João Roberto dos Santos de Oliveira</p>
+          <p>neste ato representando a pessoa jurídica Or dos Santos de Oliveira</p>
         </div>
         <br/><br/>
         <div style="text-align: center;">
-          <p style="border-bottom: 1px solid #000; display: inline-block; padding-bottom: 2px;">LOCATÁRIO</p>
-          <p>${clientData.nome}</p>
+          <p>_____________________________________________________</p>
+          <p>LOCATÁRIO: ${clientData.nome}</p>
         </div>
         <br/><br/>
         <div style="text-align: center;">
           <p>TESTEMUNHAS:</p>
           <br/>
-          <div style="display: flex; justify-content: space-around; text-align: left;">
-            <div style="width: 40%;">
+          <div className="flex flex-wrap justify-around text-left">
+            <div className="w-full sm:w-2/5">
               <p>1. _________________________</p>
               <p>Nome:</p>
               <p>CPF:</p>
             </div>
-            <div style="width: 40%;">
+            <div className="w-full sm:w-2/5">
               <p>2. _________________________</p>
               <p>Nome:</p>
               <p>CPF:</p>
