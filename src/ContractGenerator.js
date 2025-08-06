@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Car, FileText, Send, Download, Wrench, User, Calendar, DollarSign, MapPin, Phone, Mail, Hash, Palette, Clock, Loader, CheckCircle, AlertCircle, Printer, Edit } from 'lucide-react';
 import { supabase } from './supabaseClient';
-import Logo from './Logo';
+import LogoSVG from './LogoSVG';
 
 const ContractGenerator = () => {
   const [contractType, setContractType] = useState('');
@@ -53,7 +53,8 @@ const ContractGenerator = () => {
         const clientExists = acc.find(item => item.client_data.cpf === current.client_data.cpf);
         if (!clientExists) {
           acc.push(current);
-        n        return acc;
+        }
+        return acc;
       }, []);
       setClients(uniqueClients);
     }
@@ -793,9 +794,7 @@ const ContractGenerator = () => {
                     )}
                   </button>
                 </div>
-              </div>
 
-              {/* Preview do contrato */}
                 <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 print:border-none print:bg-white" id="contract-preview-container">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl">
@@ -810,7 +809,7 @@ const ContractGenerator = () => {
                   <div className="bg-white rounded-xl p-6 border border-gray-100 overflow-y-auto max-h-96 print:bg-white print:p-0 print:border-none print:max-h-none">
                     {generatedContract ? (
                       <div>
-                        <Logo showFullLogo={true} className="w-48 mx-auto mb-4" />
+                        <LogoSVG showFullLogo={true} className="w-48 mx-auto mb-4" />
                         {generatedContract}
                       </div>
                     ) : (

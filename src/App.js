@@ -3,7 +3,7 @@ import ContractGenerator from './ContractGenerator';
 import ClientList from './ClientList';
 import CarManagement from './CarManagement';
 import ClientEditor from './ClientEditor';
-import Logo from './Logo';
+import LogoSVG from './LogoSVG';
 import { FileText, Users, Car, Menu, X } from 'lucide-react';
 import './App.css';
 
@@ -42,7 +42,7 @@ function App() {
             {/* Logo and Title */}
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <Logo className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl shadow-md" />
+                <LogoSVG className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl shadow-md" />
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-pulse"></div>
               </div>
               <div>

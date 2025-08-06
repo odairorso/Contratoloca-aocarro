@@ -120,6 +120,36 @@ const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
                   required
                 />
               </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  Endereço
+                </label>
+                <input
+                  type="text"
+                  name="endereco"
+                  placeholder="Rua, Número"
+                  value={clientData.endereco || ''}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  Bairro
+                </label>
+                <input
+                  type="text"
+                  name="bairro"
+                  placeholder="Centro"
+                  value={clientData.bairro || ''}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                  required
+                />
+              </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
@@ -141,8 +171,6 @@ const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
             </div>
           </form>
         </div>
-      </div>
-    </div>
       </div>
     </div>
   );
