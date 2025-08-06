@@ -93,6 +93,10 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
     }
   };
 
+  const handleSelectCar = (car) => {
+    onEditCar(car);
+  };
+
   const handleEditInputChange = (e) => {
     const { name, value } = e.target;
     setEditingCarData({ ...editingCarData, [name]: value });
@@ -500,11 +504,17 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   {/* Action Buttons */}
                   <div className="flex gap-2">
                     <button
+                      onClick={() => handleSelectCar(car)}
+                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                    >
+                      <Car className="w-4 h-4" />
+                      <span className="text-sm">Selecionar</span>
+                    </button>
+                    <button
                       onClick={() => onEditCar(car)}
-                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                      className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
                     >
                       <Edit className="w-4 h-4" />
-                      <span className="text-sm">Editar</span>
                     </button>
                     <button
                       onClick={() => handleDeleteCar(car.id)}

@@ -17,6 +17,10 @@ function App() {
     setEditingClient(client);
   };
 
+  const handleAddClient = () => {
+    setEditingClient({});
+  };
+
   const handleEditCar = (car) => {
     setEditingCar(car);
     setPage('cars');
@@ -124,7 +128,7 @@ function App() {
               {editingClient ? (
                 <ClientEditor editingClient={editingClient} setEditingClient={setEditingClient} />
               ) : (
-                <ClientList onSelectClient={() => {}} onEditClient={handleEditClient} />
+                <ClientList onSelectClient={() => {}} onEditClient={handleEditClient} onAddClient={handleAddClient} />
               )}
             </>
           )}
