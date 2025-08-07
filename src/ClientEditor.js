@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
-import { Edit, User, Phone, Mail, MapPin, Hash, Save, X, CheckCircle } from 'lucide-react';
+import { Edit, User, Phone, MapPin, Hash, Save, X, CheckCircle, Mail } from 'lucide-react';
 
 const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
   const [clientData, setClientData] = useState(null);
@@ -15,8 +15,7 @@ const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
         rg: '',
         endereco: '',
         bairro: '',
-        telefone: '',
-        email: ''
+        telefone: ''
       });
     }
   }, [editingClient]);
@@ -126,16 +125,17 @@ const ClientEditor = ({ editingClient, setEditingClient, fetchClients }) => {
                 />
               </div>
               
+              
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  Email
+                  <Hash className="w-4 h-4" />
+                  RG
                 </label>
                 <input
-                  type="email"
-                  name="email"
-                  placeholder="cliente@email.com"
-                  value={clientData.email}
+                  type="text"
+                  name="rg"
+                  placeholder="00.000.000-0"
+                  value={clientData.rg}
                   onChange={handleInputChange}
                   className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm"
                   required

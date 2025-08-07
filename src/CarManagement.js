@@ -7,13 +7,11 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [newCar, setNewCar] = useState({
-    brand: '',
-    model: '',
-    year: '',
-    plate: '',
-    price: '',
-    color: '',
-    value: '',
+    veiculo: '',
+    modelo: '',
+    anoFabricacao: '',
+    placa: '',
+    cor: '',
     renavam: ''
   });
   const [editingCarData, setEditingCarData] = useState(null);
@@ -31,7 +29,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
     let query = supabase.from('veiculos').select('*');
 
     if (searchTerm) {
-      query = query.or(`brand.ilike.%${searchTerm}%,model.ilike.%${searchTerm}%`);
+      query = query.or(`veiculo.ilike.%${searchTerm}%,modelo.ilike.%${searchTerm}%`);
     }
 
     const { data, error } = await query;
@@ -64,7 +62,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
       alert('Erro ao adicionar carro: ' + error.message);
     } else {
       alert('Carro adicionado com sucesso!');
-      setNewCar({ brand: '', model: '', year: '', plate: '', price: '', color: '', value: '', renavam: '' });
+      setNewCar({ veiculo: '', modelo: '', anoFabricacao: '', placa: '', cor: '', renavam: '' });
       fetchCars();
     }
   };
@@ -132,13 +130,13 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <Car className="w-4 h-4" />
-                    Marca
+                    Veículo
                   </label>
                   <input
                     type="text"
-                    name="brand"
-                    placeholder="Ex: Toyota"
-                    value={editingCarData.brand}
+                    name="veiculo"
+                    placeholder="Ex: Toyota Corolla"
+                    value={editingCarData.veiculo}
                     onChange={handleEditInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
@@ -148,9 +146,9 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <label className="text-sm font-medium text-gray-700">Modelo</label>
                   <input
                     type="text"
-                    name="model"
+                    name="modelo"
                     placeholder="Ex: Corolla"
-                    value={editingCarData.model}
+                    value={editingCarData.modelo}
                     onChange={handleEditInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
@@ -162,10 +160,10 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                     Ano
                   </label>
                   <input
-                    type="number"
-                    name="year"
+                    type="text"
+                    name="anoFabricacao"
                     placeholder="2023"
-                    value={editingCarData.year}
+                    value={editingCarData.anoFabricacao}
                     onChange={handleEditInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
@@ -175,9 +173,9 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <label className="text-sm font-medium text-gray-700">Placa</label>
                   <input
                     type="text"
-                    name="plate"
+                    name="placa"
                     placeholder="ABC-1234"
-                    value={editingCarData.plate}
+                    value={editingCarData.placa}
                     onChange={handleEditInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm font-mono"
                     required
@@ -198,22 +196,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4" />
-                    Diária (R$)
-                  </label>
-                  <input
-                    type="number"
-                    name="price"
-                    placeholder="150.00"
-                    step="0.01"
-                    value={editingCarData.price}
-                    onChange={handleEditInputChange}
-                    className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
-                    required
-                  />
-                </div>
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <Palette className="w-4 h-4" />
@@ -221,30 +204,15 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   </label>
                   <input
                     type="text"
-                    name="color"
+                    name="cor"
                     placeholder="Branco"
-                    value={editingCarData.color}
+                    value={editingCarData.cor}
                     onChange={handleEditInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4" />
-                    Valor do Veículo (R$)
-                  </label>
-                  <input
-                    type="number"
-                    name="value"
-                    placeholder="85000.00"
-                    step="0.01"
-                    value={editingCarData.value}
-                    onChange={handleEditInputChange}
-                    className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
-                    required
-                  />
-                </div>
+
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <button 
@@ -283,13 +251,13 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <Car className="w-4 h-4" />
-                    Marca
+                    Veículo
                   </label>
                   <input
                     type="text"
-                    name="brand"
-                    placeholder="Ex: Toyota"
-                    value={newCar.brand}
+                    name="veiculo"
+                    placeholder="Ex: Toyota Corolla"
+                    value={newCar.veiculo}
                     onChange={handleInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
@@ -299,9 +267,9 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <label className="text-sm font-medium text-gray-700">Modelo</label>
                   <input
                     type="text"
-                    name="model"
+                    name="modelo"
                     placeholder="Ex: Corolla"
-                    value={newCar.model}
+                    value={newCar.modelo}
                     onChange={handleInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
@@ -310,13 +278,13 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    Ano
+                    Ano de Fabricação
                   </label>
                   <input
-                    type="number"
-                    name="year"
+                    type="text"
+                    name="anoFabricacao"
                     placeholder="2023"
-                    value={newCar.year}
+                    value={newCar.anoFabricacao}
                     onChange={handleInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
@@ -326,9 +294,9 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <label className="text-sm font-medium text-gray-700">Placa</label>
                   <input
                     type="text"
-                    name="plate"
+                    name="placa"
                     placeholder="ABC-1234"
-                    value={newCar.plate}
+                    value={newCar.placa}
                     onChange={handleInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm font-mono"
                     required
@@ -349,22 +317,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4" />
-                    Diária (R$)
-                  </label>
-                  <input
-                    type="number"
-                    name="price"
-                    placeholder="150.00"
-                    step="0.01"
-                    value={newCar.price}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
-                    required
-                  />
-                </div>
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <Palette className="w-4 h-4" />
@@ -372,30 +325,15 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   </label>
                   <input
                     type="text"
-                    name="color"
+                    name="cor"
                     placeholder="Branco"
-                    value={newCar.color}
+                    value={newCar.cor}
                     onChange={handleInputChange}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4" />
-                    Valor do Veículo (R$)
-                  </label>
-                  <input
-                    type="number"
-                    name="value"
-                    placeholder="85000.00"
-                    step="0.01"
-                    value={newCar.value}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
-                    required
-                  />
-                </div>
+
               </div>
               <button 
                 type="submit" 
@@ -430,7 +368,7 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Buscar por marca ou modelo..."
+                placeholder="Buscar por veículo ou modelo..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
@@ -461,18 +399,17 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-green-600 transition-colors">
-                        {car.brand} {car.model}
+                        {car.veiculo}
                       </h3>
                       <div className="flex items-center gap-2 text-sm text-gray-500">
                         <Calendar className="w-4 h-4" />
-                        <span>{car.year}</span>
+                        <span>{car.anoFabricacao}</span>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-lg font-bold text-green-600">
-                        R$ {parseFloat(car.price || 0).toFixed(2)}
+                      <div className="text-sm text-gray-600">
+                        Modelo: {car.modelo}
                       </div>
-                      <div className="text-xs text-gray-500">por dia</div>
                     </div>
                   </div>
 
@@ -480,24 +417,18 @@ const CarManagement = ({ editingCar, setEditingCar, onEditCar }) => {
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-600">Placa:</span>
-                      <span className="font-mono font-medium">{car.plate}</span>
+                      <span className="font-mono font-medium">{car.placa}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-600">Cor:</span>
                       <div className="flex items-center gap-2">
                         <Palette className="w-4 h-4 text-purple-500" />
-                        <span className="font-medium">{car.color}</span>
+                        <span className="font-medium">{car.cor}</span>
                       </div>
                     </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-600">RENAVAM:</span>
                       <span className="font-mono text-xs">{car.renavam}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Valor:</span>
-                      <span className="font-medium text-blue-600">
-                        R$ {parseFloat(car.value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </span>
                     </div>
                   </div>
 
